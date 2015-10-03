@@ -13,14 +13,12 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.unladenswallow.minecraft.quiver.item.ItemBowAndQuiver;
 import net.unladenswallow.minecraft.quiver.item.ItemExplodingArrow;
-import net.unladenswallow.minecraft.quiver.item.ItemExplosionBow;
 import net.unladenswallow.minecraft.quiver.item.ItemIronArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemLavaArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemPoisonArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemQuiverableArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemTeleportArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemTorchArrow;
-import net.unladenswallow.minecraft.quiver.item.ItemTorchBow;
 import net.unladenswallow.minecraft.quiver.item.ItemWaterArrow;
 
 
@@ -190,18 +188,16 @@ public class ModFFQuiver {
 				new Object[] {Blocks.torch, Items.arrow});
 		GameRegistry.addShapelessRecipe(new ItemStack(explodingArrow), 
 				new Object[] {Items.arrow, Items.gunpowder});
-		GameRegistry.addShapelessRecipe(new ItemStack(poisonArrow, 8),
-				new Object[] {Items.arrow, Items.arrow, Items.arrow, Items.arrow, Items.arrow, 
-						Items.arrow, Items.arrow, Items.arrow, new ItemStack(Items.potionitem, 1, 8196)});
+		GameRegistry.addShapelessRecipe(new ItemStack(poisonArrow, 3),
+				new Object[] {Items.arrow, Items.arrow, Items.arrow, new ItemStack(Items.potionitem, 1, 8196)});
 		GameRegistry.addShapelessRecipe(new ItemStack(teleportArrow), 
 				new Object[] {Items.arrow, ModFFQuiver.enderShard});
 		GameRegistry.addShapelessRecipe(new ItemStack(enderShard, 4), 
 				new Object[] {Items.ender_pearl});
 		GameRegistry.addShapelessRecipe(new ItemStack(Items.ender_pearl), 
 				new Object[] {enderShard, enderShard, enderShard, enderShard});
-		GameRegistry.addShapelessRecipe(new ItemStack(waterArrow, 8), 
-				new Object[] {Items.arrow, Items.arrow, Items.arrow, Items.arrow, Items.arrow, 
-						Items.arrow, Items.arrow, Items.arrow, Items.water_bucket});
+		GameRegistry.addShapelessRecipe(new ItemStack(waterArrow, 3), 
+				new Object[] {Items.arrow, Items.arrow, Items.arrow, Items.water_bucket});
 		// Only allow 1 lava arrow from lava bucket.  Otherwise it would turn lava into a renewable resource
 		GameRegistry.addShapelessRecipe(new ItemStack(lavaArrow), new Object[] {Items.arrow, Items.lava_bucket});
 

@@ -1,7 +1,7 @@
 [
 {
   "modid": "mod_quiver",
-  "name": "FF Quiver Forge Mod",
+  "name": "FF Quiver Mod",
   "description": "Adds a Bow and Quiver and various additional types of arrows.",
   "version": "${version}",
   "mcversion": "${mcversion}",

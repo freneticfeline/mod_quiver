@@ -178,6 +178,13 @@ public class ModFFQuiver {
 				'L', Items.leather,
 				'T', Items.stick,
 				'S', Items.string);
+		GameRegistry.addRecipe(new ItemStack(emptyBowAndQuiver, 1),
+				"STL",
+				"SLT",
+				"STL",
+				'L', Items.leather,
+				'T', Items.stick,
+				'S', Items.string);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(torchArrow),
 				new Object[] {Blocks.torch, Items.arrow});

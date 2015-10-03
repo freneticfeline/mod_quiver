@@ -1,0 +1,6 @@
+{
+    "parent":"mod_quiver:item/standard_item",
+    "textures": {
+        "layer0":"mod_quiver:items/ender_shard"
+    }
+}

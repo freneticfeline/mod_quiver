@@ -1,0 +1,8 @@
+1.8-1.1
+=======
+Properly apply infinity enchantment to Bow and Quiver items
+Retain enchantments when reloading arrows into the Bow and Quiver items
+
+1.8-1.0
+=======
+Initial release of the FF Quiver Mod

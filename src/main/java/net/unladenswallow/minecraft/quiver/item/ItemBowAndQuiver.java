@@ -2,6 +2,8 @@ package net.unladenswallow.minecraft.quiver.item;
 
 import java.util.List;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
@@ -149,7 +151,9 @@ public class ItemBowAndQuiver extends ItemCustomBow {
 
 	@Override
 	protected void takeDamage(int i, ItemStack stack, EntityPlayer playerIn) {
-        stack.damageItem(1, playerIn);
+		if (EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, stack) == 0) {
+			stack.damageItem(1, playerIn);
+		}
         if (stack.getItemDamage() == stack.getMaxDamage()) {
 //        	FFLogger.info("ItemBowAndQuiver takeDamage(): Quiver empty.  Reverting to default state.");
         	playerIn.getItemInUse().setItem(ModFFQuiver.emptyBowAndQuiver);

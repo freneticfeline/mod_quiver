@@ -5,6 +5,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -58,6 +60,8 @@ public class ModFFQuiver {
 	
 	public static ItemQuiverableArrow lavaArrow;
 	public static Item lavaArrowBowAndQuiver;
+	
+	public static FFQEventHandler ffqEventHandler;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent preInitEvent) {
@@ -123,6 +127,9 @@ public class ModFFQuiver {
 		GameRegistry.registerItem(lavaArrow, "lava_arrow");
 		GameRegistry.registerItem(lavaArrowBowAndQuiver, "lavaarrowbowandquiver");
 		
+		ffqEventHandler = new FFQEventHandler();
+		MinecraftForge.EVENT_BUS.register(ffqEventHandler);
+		FMLCommonHandler.instance().bus().register(ffqEventHandler);
 	}
 	
 	@EventHandler

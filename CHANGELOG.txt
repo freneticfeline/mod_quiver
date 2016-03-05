@@ -1,3 +1,7 @@
+1.8.9-1.1
+=========
+Update for 1.8.9
+
 1.8-1.1
 =======
 Properly apply infinity enchantment to Bow and Quiver items

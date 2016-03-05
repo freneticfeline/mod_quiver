@@ -1,19 +1,14 @@
 package net.unladenswallow.minecraft.quiver;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderArrow;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.unladenswallow.minecraft.quiver.entity.EntityExplodingArrow;
-import net.unladenswallow.minecraft.quiver.entity.EntityTorchArrow;
-import net.unladenswallow.minecraft.quiver.item.RenderTorchArrow;
 
 public class ClientProxy extends CommonProxy {
 
@@ -57,10 +52,6 @@ public class ClientProxy extends CommonProxy {
     		.register(ModFFQuiver.waterArrow, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "water_arrow"), "inventory"));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
     		.register(ModFFQuiver.lavaArrow, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "lava_arrow"), "inventory"));
-        RenderingRegistry.registerEntityRenderingHandler(EntityTorchArrow.class,
-        	new RenderTorchArrow(Minecraft.getMinecraft().getRenderManager()));
-        RenderingRegistry.registerEntityRenderingHandler(EntityExplodingArrow.class,
-            	new RenderArrow(Minecraft.getMinecraft().getRenderManager()));
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
     		.register(ModFFQuiver.enderShard, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "ender_shard"), "inventory"));
 

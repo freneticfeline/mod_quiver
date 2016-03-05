@@ -358,8 +358,8 @@ public abstract class EntityCustomArrow extends EntityArrow
 
                 if (this.shootingEntity instanceof EntityLivingBase)
                 {
-                    EnchantmentHelper.func_151384_a(entitylivingbase, this.shootingEntity);
-                    EnchantmentHelper.func_151385_b((EntityLivingBase)this.shootingEntity, entitylivingbase);
+                    EnchantmentHelper.applyThornEnchantments(entitylivingbase, this.shootingEntity);
+                    EnchantmentHelper.applyArthropodEnchantments((EntityLivingBase)this.shootingEntity, entitylivingbase);
                 }
 
                 if (this.shootingEntity != null && entity != this.shootingEntity && entity instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)

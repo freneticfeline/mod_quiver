@@ -37,7 +37,7 @@ public class ItemExplosionBow extends ItemCustomBow {
 	}
 
 	@Override
-	protected EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, float damage, int itemUseDuration) {
+	protected EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, int itemUseDuration) {
         float radiusMod = 1.0F;
         if (itemUseDuration > 500) {
         	radiusMod = 25.0F;
@@ -51,7 +51,7 @@ public class ItemExplosionBow extends ItemCustomBow {
         	radiusMod = 2.0F;
         }
 
-		return new EntityExplodingArrow(worldIn, playerIn, damage, radiusMod);
+		return new EntityExplodingArrow(worldIn, playerIn, radiusMod);
 	}
 
 	@Override

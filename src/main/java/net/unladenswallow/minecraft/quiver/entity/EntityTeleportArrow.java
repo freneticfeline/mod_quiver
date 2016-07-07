@@ -10,8 +10,8 @@ import net.minecraft.world.World;
 
 public class EntityTeleportArrow extends EntityCustomArrow {
 
-	public EntityTeleportArrow(World worldIn, EntityLivingBase shooter, float p_i1756_3_) {
-		super(worldIn, shooter, p_i1756_3_);
+	public EntityTeleportArrow(World worldIn, EntityLivingBase shooter) {
+		super(worldIn, shooter);
 		unlocalizedName = "teleportArrow";
 	}
 
@@ -36,10 +36,10 @@ public class EntityTeleportArrow extends EntityCustomArrow {
 
                     if (this.shootingEntity.isRiding())
                     {
-                    	this.shootingEntity.mountEntity((Entity)null);
+                    	this.shootingEntity.startRiding((Entity)null);
                     }
 
-                    this.shootingEntity.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
+                    this.shootingEntity.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
                     this.shootingEntity.fallDistance = 0.0F;
                     }
                 }

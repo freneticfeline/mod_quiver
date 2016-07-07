@@ -6,15 +6,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.unladenswallow.minecraft.quiver.ModFFQuiver;
 
 public class EntityTorchArrow extends EntityCustomArrow {
 
-	public EntityTorchArrow(World worldIn, EntityLivingBase shooter, float p_i1756_3_) {
-		super(worldIn, shooter, p_i1756_3_);
+	public EntityTorchArrow(World worldIn, EntityLivingBase shooter) {
+		super(worldIn, shooter);
 		unlocalizedName = "torchArrow";
 	}
 

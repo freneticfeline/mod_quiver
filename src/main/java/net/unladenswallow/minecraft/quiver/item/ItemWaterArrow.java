@@ -15,8 +15,8 @@ public class ItemWaterArrow extends ItemQuiverableArrow {
 	}
 
 	@Override
-	public EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, float damage, int itemUseDuration) {
-		return new EntityWaterArrow(worldIn, playerIn, damage);
+	public EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, int itemUseDuration) {
+		return new EntityWaterArrow(worldIn, playerIn);
 	}
 
 }

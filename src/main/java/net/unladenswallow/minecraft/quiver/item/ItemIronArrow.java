@@ -3,6 +3,7 @@ package net.unladenswallow.minecraft.quiver.item;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.world.World;
+import net.unladenswallow.minecraft.quiver.entity.EntityIronArrow;
 
 public class ItemIronArrow extends ItemQuiverableArrow {
 
@@ -14,7 +15,7 @@ public class ItemIronArrow extends ItemQuiverableArrow {
 	}
 
 	public EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, float damage, int itemUseDuration) {
-		return new EntityArrow(worldIn, playerIn, damage*1.7f);
+		return new EntityIronArrow(worldIn, playerIn);
 	}
 
 }

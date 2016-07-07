@@ -2,13 +2,13 @@ package net.unladenswallow.minecraft.quiver.item;
 
 import java.util.List;
 
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -53,16 +53,16 @@ public class ItemBowAndQuiver extends ItemCustomBow {
 //		logCurrentStackState(stack);
 		super.addInformation(stack, playerIn, tooltip, advanced);
 		int ammoCount = stack.getMaxDamage() - stack.getItemDamage();
-		tooltip.add(EnumChatFormatting.GRAY + "Quiver: "
+		tooltip.add(TextFormatting.GRAY.toString() + "Quiver: "
 				+ (this.getQuiverableArrow() == null ? "empty"
 								: ammoCount + " / " + stack.getMaxDamage() + " " 
-								  + EnumChatFormatting.BLUE.toString() + this.getQuiverableArrow().getName() + (stack.getItemDamage() > 1 ? "s" : "")
+								  + TextFormatting.BLUE.toString() + this.getQuiverableArrow().getName() + (stack.getItemDamage() > 1 ? "s" : "")
 				  ));
 		if (this.getQuiverableArrow() == null) {
-			tooltip.add(EnumChatFormatting.GRAY.toString() + EnumChatFormatting.ITALIC.toString()
+			tooltip.add(TextFormatting.GRAY.toString() + TextFormatting.ITALIC.toString()
 				+ "Load with " + "8 or 3 of any arrow type");
 		} else if (stack.getItemDamage() > 0) {
-			tooltip.add(EnumChatFormatting.GRAY.toString() + EnumChatFormatting.ITALIC.toString()
+			tooltip.add(TextFormatting.GRAY.toString() + TextFormatting.ITALIC.toString()
 				+ "Reload with " + Math.min(8, stack.getItemDamage()) + (stack.getItemDamage() > 3 ? " or 3 " : " ")
 				+ this.getQuiverableArrow().getName()	+ (stack.getItemDamage() > 1 ? "s" : "")
 					);
@@ -151,21 +151,21 @@ public class ItemBowAndQuiver extends ItemCustomBow {
 
 	@Override
 	protected void takeDamage(int i, ItemStack stack, EntityPlayer playerIn) {
-		if (EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, stack) == 0) {
+		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.infinity, stack) == 0) {
 			stack.damageItem(1, playerIn);
 		}
         if (stack.getItemDamage() == stack.getMaxDamage()) {
 //        	FFLogger.info("ItemBowAndQuiver takeDamage(): Quiver empty.  Reverting to default state.");
-        	playerIn.getItemInUse().setItem(ModFFQuiver.emptyBowAndQuiver);
-        	playerIn.getItemInUse().setItemDamage(0);
+        	playerIn.getHeldItemMainhand().setItem(ModFFQuiver.emptyBowAndQuiver);
+        	playerIn.getHeldItemMainhand().setItemDamage(0);
         }
 //        logCurrentStackState(stack);
 	}
 
 
     @Override
-	protected EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, float damage, int itemUseDuration) {
-		return this.getQuiverableArrow().getNewEntityArrow(worldIn, playerIn, damage, itemUseDuration);
+	protected EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, int itemUseDuration) {
+		return this.getQuiverableArrow().getNewEntityArrow(worldIn, playerIn, itemUseDuration);
 	}
 
     @Override

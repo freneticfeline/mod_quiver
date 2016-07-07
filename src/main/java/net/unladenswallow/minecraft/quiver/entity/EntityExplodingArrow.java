@@ -3,20 +3,23 @@ package net.unladenswallow.minecraft.quiver.entity;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.unladenswallow.minecraft.quiver.ModFFQuiver;
 
 public class EntityExplodingArrow extends EntityCustomArrow {
 
 	private float explosionRadius = 1.0f;
 
-	public EntityExplodingArrow(World worldIn, EntityLivingBase shooter, float p_i1756_3_) {
-		super(worldIn, shooter, p_i1756_3_);
+	public EntityExplodingArrow(World worldIn, EntityLivingBase shooter) {
+		super(worldIn, shooter);
 		unlocalizedName = "explodingArrow";
 	}
 
-	public EntityExplodingArrow(World worldIn, EntityLivingBase shooter, float p_i1756_3_, float explosionRadiusModifier) {
-		super(worldIn, shooter, p_i1756_3_);
+	public EntityExplodingArrow(World worldIn, EntityLivingBase shooter, float explosionRadiusModifier) {
+		super(worldIn, shooter);
 		unlocalizedName = "explodingArrow";
 		this.explosionRadius = this.explosionRadius * explosionRadiusModifier;
 	}
@@ -33,4 +36,11 @@ public class EntityExplodingArrow extends EntityCustomArrow {
     	this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, this.explosionRadius, true);
 		this.setDead();
 	}
+	
+	@Override
+    protected ItemStack getArrowStack()
+    {
+        return new ItemStack(ModFFQuiver.explodingArrow);
+    }
+
 }

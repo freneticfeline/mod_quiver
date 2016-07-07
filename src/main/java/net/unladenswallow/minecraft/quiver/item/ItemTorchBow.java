@@ -31,7 +31,7 @@ public class ItemTorchBow extends ItemCustomBow {
         return f;
 	}
 
-	@Override
+/*	@Override
 	protected int getModelVariation(int useTime) {
     	if(useTime >= 21) {
     		return 2;
@@ -41,15 +41,15 @@ public class ItemTorchBow extends ItemCustomBow {
             return 0;
         }
 	}
-
+*/
 	@Override
 	protected void applyEnchantments(EntityArrow entityarrow, ItemStack stack) {
 		// No enchantments apply
 	}
 
 	@Override
-	protected EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, float damage, int itemUseDuration) {
-		return new EntityTorchArrow(worldIn, playerIn, damage);
+	protected EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, int itemUseDuration) {
+		return new EntityTorchArrow(worldIn, playerIn);
 	}
 
 	@Override

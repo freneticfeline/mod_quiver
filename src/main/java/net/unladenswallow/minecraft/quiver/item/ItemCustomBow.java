@@ -1,20 +1,25 @@
 package net.unladenswallow.minecraft.quiver.item;
 
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityTippedArrow;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.unladenswallow.minecraft.quiver.FFQLogger;
 import net.unladenswallow.minecraft.quiver.ModFFQuiver;
 
 public abstract class ItemCustomBow extends ItemBow {
@@ -33,25 +38,27 @@ public abstract class ItemCustomBow extends ItemBow {
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
     {
-        net.minecraftforge.event.entity.player.ArrowNockEvent event = new net.minecraftforge.event.entity.player.ArrowNockEvent(playerIn, itemStackIn);
-        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) return event.result;
+        ActionResult<ItemStack> event = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemStackIn, worldIn, playerIn, hand, true);
+        if (event != null) return event;
 
         if (isUsableByPlayer(itemStackIn, playerIn))
         {
-            playerIn.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
+            playerIn.setActiveHand(hand);
+            return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+        } else {
+            return new ActionResult(EnumActionResult.FAIL, itemStackIn);
         }
-
-        return itemStackIn;
+        
     }
 
     protected boolean isUsableByPlayer(ItemStack itemStackIn, EntityPlayer playerIn) {
-		return hasInfiniteArrows(itemStackIn, playerIn) || playerIn.inventory.hasItem(getItemUsedByBow());
+		return hasInfiniteArrows(itemStackIn, playerIn) || playerIn.inventory.hasItemStack(new ItemStack(getItemUsedByBow()));
 	}
 
     protected boolean hasInfiniteArrows(ItemStack itemStackIn, EntityPlayer playerIn) {
-    	return (EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, itemStackIn) > 0)
+    	return (EnchantmentHelper.getEnchantmentLevel(Enchantments.infinity, itemStackIn) > 0)
     			|| playerIn.capabilities.isCreativeMode;
     }
     
@@ -61,56 +68,59 @@ public abstract class ItemCustomBow extends ItemBow {
      * @param timeLeft The amount of ticks left before the using would have been complete
      */
 	@Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityPlayer playerIn, int timeLeft)
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase playerIn, int timeLeft)
     {
-        int itemUseDuration = this.getMaxItemUseDuration(stack) - timeLeft;
-        net.minecraftforge.event.entity.player.ArrowLooseEvent event = new net.minecraftforge.event.entity.player.ArrowLooseEvent(playerIn, stack, itemUseDuration);
-        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) return;
-        itemUseDuration = event.charge;
+	    if (playerIn instanceof EntityPlayer) {
+	        EntityPlayer player = (EntityPlayer)playerIn;
 
-        if (isUsableByPlayer(stack, playerIn))
-        {
-        	float arrowDamage = getArrowDamage(itemUseDuration);
-        	// I don't understand why this is done, but ItemBow does it, so we'll do it
-            if ((double)arrowDamage < 0.1D) {
-                return;
-            }
+	        int itemUseDuration = this.getMaxItemUseDuration(stack) - timeLeft;
+	        itemUseDuration = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, player, itemUseDuration, isUsableByPlayer(stack, (EntityPlayer)playerIn));
 
-//            MEMLogger.info("ItemCustomBow onPlayerStoppedUsing(): f = " + arrowDamage + "; j = " + itemUseDuration + "; timeLeft = " + timeLeft);
-            
-            EntityArrow entityarrow = getNewEntityArrow(worldIn, playerIn, arrowDamage * 2.0f, itemUseDuration);
+	        if (isUsableByPlayer(stack, player))
+	        {
+	            float arrowDamage = getArrowDamage(itemUseDuration);
+	            // I don't understand why this is done, but ItemBow does it, so we'll do it
+	            if ((double)arrowDamage < 0.1D) {
+	                return;
+	            }
 
-            entityarrow.setIsCritical(shotIsCritical(itemUseDuration, arrowDamage));
-//            if (entityarrow.getIsCritical()) {
-//                MEMLogger.info("ItemCustomBow onPlayerStoppedUsing(): PEW! PEW!");
-//            }
+	            //            MEMLogger.info("ItemCustomBow onPlayerStoppedUsing(): f = " + arrowDamage + "; j = " + itemUseDuration + "; timeLeft = " + timeLeft);
 
-            applyEnchantments(entityarrow, stack);
-            
-            takeDamage(1, stack, playerIn);
+	            EntityArrow entityarrow = getNewEntityArrow(worldIn, player, itemUseDuration);
+	            entityarrow.setDamage(arrowDamage * 2.0f);
 
-            worldIn.playSoundAtEntity(playerIn, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + arrowDamage * 0.5F);
+	            entityarrow.setIsCritical(shotIsCritical(itemUseDuration, arrowDamage));
+	            //            if (entityarrow.getIsCritical()) {
+	            //                MEMLogger.info("ItemCustomBow onPlayerStoppedUsing(): PEW! PEW!");
+	            //            }
 
-            if (hasInfiniteArrows(stack, playerIn))
-            {
-                entityarrow.canBePickedUp = 2;
-            }
-            else
-            {
-            	this.consumeAmmo(stack, worldIn, playerIn);
-            }
+	            applyEnchantments(entityarrow, stack);
 
-            playerIn.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
+	            takeDamage(1, stack, player);
 
-            if (!worldIn.isRemote)
-            {
-                worldIn.spawnEntityInWorld(entityarrow);
-            }
-        }
+	            worldIn.playSound(player.posX, player.posY, player.posZ, SoundEvents.entity_arrow_shoot, SoundCategory.HOSTILE, 1.0F, (1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + arrowDamage * 0.5F), true);
+
+	            if (hasInfiniteArrows(stack, player))
+	            {
+	                entityarrow.canBePickedUp = EntityArrow.PickupStatus.CREATIVE_ONLY;
+	            }
+	            else
+	            {
+	                this.consumeAmmo(stack, worldIn, player);
+	            }
+
+	            player.addStat(StatList.func_188057_b(this));
+
+	            if (!worldIn.isRemote)
+	            {
+	                worldIn.spawnEntityInWorld(entityarrow);
+	            }
+	        }
+	    }
     }
 
 	protected void consumeAmmo(ItemStack stack, World worldIn, EntityPlayer playerIn) {
-        playerIn.inventory.consumeInventoryItem(getItemUsedByBow());
+        playerIn.inventory.clearMatchingItems(getItemUsedByBow(), -1, 1, null);
 	}
 
 	protected void takeDamage(int i, ItemStack stack, EntityPlayer playerIn) {
@@ -125,17 +135,22 @@ public abstract class ItemCustomBow extends ItemBow {
 	 * @param stack
 	 */
 	protected void applyEnchantments(EntityArrow entityarrow, ItemStack stack) {
-        int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack);
-        if (k > 0) {
-            entityarrow.setDamage(entityarrow.getDamage() + (double)k * 0.5D + 0.5D);
+        int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.power, stack);
+
+        if (j > 0)
+        {
+            entityarrow.setDamage(entityarrow.getDamage() + (double)j * 0.5D + 0.5D);
         }
 
-        int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, stack);
-        if (l > 0) {
-            entityarrow.setKnockbackStrength(l);
+        int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.punch, stack);
+
+        if (k > 0)
+        {
+            entityarrow.setKnockbackStrength(k);
         }
 
-        if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, stack) > 0) {
+        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.flame, stack) > 0)
+        {
             entityarrow.setFire(100);
         }
 	}
@@ -179,11 +194,11 @@ public abstract class ItemCustomBow extends ItemBow {
 	 * @param damage
 	 * @return
 	 */
-	protected EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, float damage, int itemUseDuration) {
-		return new EntityArrow(worldIn, playerIn, damage);
+	protected EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, int itemUseDuration) {
+		return new EntityTippedArrow(worldIn, playerIn);
 	}
 
-	@Override
+/*	@Override
     public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining)
     {
 		int useTime = getMaxItemUseDuration(stack) - useRemaining;
@@ -206,13 +221,13 @@ public abstract class ItemCustomBow extends ItemBow {
         return modelresourcelocation;
     }
 	
-	/**
+	*//**
 	 * Helper function for getModel() that allows subclasses to easily overwrite custom animation
 	 * sequences for bow pull
 	 * 
 	 * @param useTime
 	 * @return
-	 */
+	 *//*
 	protected int getModelVariation(int useTime) {
     	if(useTime >= 21) {
     		return 2;
@@ -222,16 +237,16 @@ public abstract class ItemCustomBow extends ItemBow {
             return 0;
         }
 	}
-
+*/
 	@SubscribeEvent
 	public void fovUpdate(FOVUpdateEvent event) {
-		if (event.entity instanceof EntityPlayer) {
-			if (event.entity.isUsingItem() && event.entity.getItemInUse().getItem() == this) {
-				float fovModifier = getNewFovModifier(event.entity.getItemInUseDuration());
+		if (event.getEntity() instanceof EntityPlayer) {
+			if (event.getEntity().isHandActive() && event.getEntity().getActiveItemStack().getItem() == this) {
+				float fovModifier = getNewFovModifier(event.getEntity().getItemInUseCount());
 		        float fov = 1.0f;
 		        fov *= 1.0F - fovModifier * 0.15F;
 //				MEMLogger.info("ItemCustomBow fovUpdate(): itemUseDuration = " + event.entity.getItemInUseDuration() + "; fovModifier = " + fovModifier + "; newfov = " + fov);
-	            event.newfov = fov;
+	            event.setNewfov(fov);
 			}
 		}
 	}

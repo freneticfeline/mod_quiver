@@ -26,8 +26,8 @@ public class ItemTeleportBow extends ItemCustomBow {
 	}
 
 	@Override
-	protected EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, float damage, int itemUseDuration) {
-		return new EntityTeleportArrow(worldIn, playerIn, damage);
+	protected EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, int itemUseDuration) {
+		return new EntityTeleportArrow(worldIn, playerIn);
 	}
 
 	@Override

@@ -3,16 +3,19 @@ package net.unladenswallow.minecraft.quiver.entity;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBucket;
-import net.minecraft.util.BlockPos;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.unladenswallow.minecraft.quiver.ModFFQuiver;
 
 public class EntityWaterArrow extends EntityCustomArrow {
 
-	public EntityWaterArrow(World worldIn, EntityLivingBase shooter, float p_i1756_3_) {
-		super(worldIn, shooter, p_i1756_3_);
+	public EntityWaterArrow(World worldIn, EntityLivingBase shooter) {
+		super(worldIn, shooter);
 		unlocalizedName = "waterArrow";
 	}
 
@@ -22,7 +25,7 @@ public class EntityWaterArrow extends EntityCustomArrow {
     	BlockPos facingBlockPos = facingBlock(blockpos, facing);
 //    	worldObj.setBlockState(facingBlockPos, Blocks.water.getDefaultState());
     	ItemBucket waterBucket = (ItemBucket)(Items.water_bucket);
-    	waterBucket.tryPlaceContainedLiquid(this.worldObj, facingBlockPos);
+    	waterBucket.tryPlaceContainedLiquid((EntityPlayer)this.shootingEntity, this.worldObj, facingBlockPos);
     	this.setDead();
 	}
 	
@@ -32,7 +35,13 @@ public class EntityWaterArrow extends EntityCustomArrow {
 //		Block.spawnAsEntity(worldObj, blockpos, new ItemStack(ModFreneticFolly.waterArrow));
     	ItemBucket waterBucket = (ItemBucket)(Items.water_bucket);
 //    	FFLogger.info("EntityWaterArrow handleEntityHit: trying to place a block of water at " + blockpos);
-    	waterBucket.tryPlaceContainedLiquid(this.worldObj, blockpos);
+    	waterBucket.tryPlaceContainedLiquid((EntityPlayer)this.shootingEntity, this.worldObj, blockpos);
 		this.setDead();
 	}
+    
+    @Override
+    protected ItemStack getArrowStack()
+    {
+        return new ItemStack(ModFFQuiver.waterArrow);
+    }
 }

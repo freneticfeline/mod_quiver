@@ -1,8 +1,8 @@
 package net.unladenswallow.minecraft.quiver;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -88,10 +88,11 @@ public class ClientProxy extends CommonProxy {
     private void registerItemModelWithVariants(Item bowAndQuiver, String itemModel, String modelBase, int numVariants) {
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
     		.register(bowAndQuiver, 0, new ModelResourceLocation(itemModel, "inventory"));
-        ModelBakery.addVariantName(bowAndQuiver, itemModel);
-        ModelBakery.addVariantName(bowAndQuiver, modelBase);
-        for (int i = 0; i < numVariants; i++) {
-	        ModelBakery.addVariantName(bowAndQuiver, modelBase + "_pulling_" + i);
-        }
+// TODO: FIX THIS        
+//        ModelBakery.addVariantName(bowAndQuiver, itemModel);
+//        ModelBakery.addVariantName(bowAndQuiver, modelBase);
+//        for (int i = 0; i < numVariants; i++) {
+//	        ModelBakery.addVariantName(bowAndQuiver, modelBase + "_pulling_" + i);
+//        }
     }
 }

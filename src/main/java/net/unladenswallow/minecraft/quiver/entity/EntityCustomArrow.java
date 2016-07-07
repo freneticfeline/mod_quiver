@@ -14,17 +14,21 @@ import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.network.play.server.S2BPacketChangeGameState;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.SPacketChangeGameState;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ReportedException;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.unladenswallow.minecraft.quiver.FFQLogger;
 
@@ -52,13 +56,13 @@ public abstract class EntityCustomArrow extends EntityArrow
 
     protected int fire;
     
-    public EntityCustomArrow(World worldIn, EntityLivingBase shooter, float p_i1756_3_)
+    public EntityCustomArrow(World worldIn, EntityLivingBase shooter)
     {
         /* For some reason when this constructor was copied verbatim from EntityArrow, the fired
          * arrows always hit the player in survival mode.  Even though the code was copied verbatim!
          * Calling the constructor doesn't have the same problem.
          */
-        super(worldIn, shooter, p_i1756_3_);
+        super(worldIn, shooter);
 //        FFLogger.info("EntityCustomArrow [" + System.identityHashCode(this) + "] <init>: origin = " + (new BlockPos(shooter.posX, shooter.posY, shooter.posZ)).toString());
     }
 
@@ -93,12 +97,12 @@ public abstract class EntityCustomArrow extends EntityArrow
         IBlockState iblockstate = this.worldObj.getBlockState(blockpos);
         Block block = iblockstate.getBlock();
 
-        if (block.getMaterial() != Material.air)
+        if (block.getMaterial(iblockstate) != Material.air)
         {
-            block.setBlockBoundsBasedOnState(this.worldObj, blockpos);
-            AxisAlignedBB axisalignedbb = block.getCollisionBoundingBox(this.worldObj, blockpos, iblockstate);
+//            block.setBlockBoundsBasedOnState(this.worldObj, blockpos);
+            AxisAlignedBB axisalignedbb = block.getCollisionBoundingBox(iblockstate, this.worldObj, blockpos);
 
-            if (axisalignedbb != null && axisalignedbb.isVecInside(new Vec3(this.posX, this.posY, this.posZ)))
+            if (axisalignedbb != null && axisalignedbb.isVecInside(new Vec3d(this.posX, this.posY, this.posZ)))
             {
                 this.inGround = true;
             }
@@ -135,15 +139,15 @@ public abstract class EntityCustomArrow extends EntityArrow
         {
 //        	MEMLogger.info("EntityCustomArrow onUpdate(): I'm in the air");
             ++this.ticksInAir;
-            Vec3 vec31 = new Vec3(this.posX, this.posY, this.posZ);
-            Vec3 vec3 = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-            MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec31, vec3, false, true, false);
-            vec31 = new Vec3(this.posX, this.posY, this.posZ);
-            vec3 = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            Vec3d vec31 = new Vec3d(this.posX, this.posY, this.posZ);
+            Vec3d vec3 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            RayTraceResult rayTraceResult = this.worldObj.rayTraceBlocks(vec31, vec3, false, true, false);
+            vec31 = new Vec3d(this.posX, this.posY, this.posZ);
+            vec3 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
-            if (movingobjectposition != null)
+            if (rayTraceResult != null)
             {
-                vec3 = new Vec3(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+                vec3 = new Vec3d(rayTraceResult.hitVec.xCoord, rayTraceResult.hitVec.yCoord, rayTraceResult.hitVec.zCoord);
             }
 
             Entity entity = null;
@@ -161,11 +165,11 @@ public abstract class EntityCustomArrow extends EntityArrow
                 {
                     f1 = 0.3F;
                     AxisAlignedBB axisalignedbb1 = entity1.getEntityBoundingBox().expand((double)f1, (double)f1, (double)f1);
-                    MovingObjectPosition movingobjectposition1 = axisalignedbb1.calculateIntercept(vec31, vec3);
+                    RayTraceResult rayTraceResult1 = axisalignedbb1.calculateIntercept(vec31, vec3);
 
-                    if (movingobjectposition1 != null)
+                    if (rayTraceResult1 != null)
                     {
-                        double d1 = vec31.distanceTo(movingobjectposition1.hitVec);
+                        double d1 = vec31.distanceTo(rayTraceResult1.hitVec);
 
                         if (d1 < d0 || d0 == 0.0D)
                         {
@@ -178,16 +182,16 @@ public abstract class EntityCustomArrow extends EntityArrow
 
             if (entity != null)
             {
-                movingobjectposition = new MovingObjectPosition(entity);
+                rayTraceResult = new RayTraceResult(entity);
             }
 
-            if (movingobjectposition != null && movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityPlayer)
+            if (rayTraceResult != null && rayTraceResult.entityHit != null && rayTraceResult.entityHit instanceof EntityPlayer)
             {
-                EntityPlayer entityplayer = (EntityPlayer)movingobjectposition.entityHit;
+                EntityPlayer entityplayer = (EntityPlayer)rayTraceResult.entityHit;
 
                 if (entityplayer.capabilities.disableDamage || this.shootingEntity instanceof EntityPlayer && !((EntityPlayer)this.shootingEntity).canAttackPlayer(entityplayer))
                 {
-                    movingobjectposition = null;
+                    rayTraceResult = null;
                 }
             }
 
@@ -195,23 +199,23 @@ public abstract class EntityCustomArrow extends EntityArrow
             float f3;
             float f4;
 
-            if (movingobjectposition != null)
+            if (rayTraceResult != null)
             {
 //            	MEMLogger.info("EntityCustomArrow onUpdate(): movingobjectposition is not null");
-                if (movingobjectposition.entityHit != null)
+                if (rayTraceResult.entityHit != null)
                 {
-                	FFQLogger.info("EntityCustomArrow onUpdate(): I hit " + movingobjectposition.entityHit.getName());
+                	FFQLogger.info("EntityCustomArrow onUpdate(): I hit " + rayTraceResult.entityHit.getName());
 
                 	/*
                 	 * Pulled out for subclass override
                 	 */
-                	handleEntityHit(movingobjectposition.entityHit);
+                	handleEntityHit(rayTraceResult.entityHit);
                 }
                 else
                 {
 //                	MEMLogger.info("EntityCustomArrow onUpdate(): I don't know what this means.");
 
-                	BlockPos blockpos1 = movingobjectposition.getBlockPos();
+                	BlockPos blockpos1 = rayTraceResult.getBlockPos();
                     this.xTile = blockpos1.getX();
                     this.yTile = blockpos1.getY();
                     this.zTile = blockpos1.getZ();
@@ -219,19 +223,19 @@ public abstract class EntityCustomArrow extends EntityArrow
                     this.inTile = iblockstate.getBlock();
 //                	MEMLogger.info("EntityCustomArrow onUpdate(): Looks like I'm in block " + this.inTile.getLocalizedName());
                     this.inData = this.inTile.getMetaFromState(iblockstate);
-                    this.motionX = (double)((float)(movingobjectposition.hitVec.xCoord - this.posX));
-                    this.motionY = (double)((float)(movingobjectposition.hitVec.yCoord - this.posY));
-                    this.motionZ = (double)((float)(movingobjectposition.hitVec.zCoord - this.posZ));
+                    this.motionX = (double)((float)(rayTraceResult.hitVec.xCoord - this.posX));
+                    this.motionY = (double)((float)(rayTraceResult.hitVec.yCoord - this.posY));
+                    this.motionZ = (double)((float)(rayTraceResult.hitVec.zCoord - this.posZ));
                     f3 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
                     this.posX -= this.motionX / (double)f3 * 0.05000000074505806D;
                     this.posY -= this.motionY / (double)f3 * 0.05000000074505806D;
                     this.posZ -= this.motionZ / (double)f3 * 0.05000000074505806D;
-                    this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+                    this.playSound(SoundEvents.entity_arrow_hit, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
                     this.inGround = true;
                     this.arrowShake = 7;
                     this.setIsCritical(false);
 
-                    if (this.inTile.getMaterial() != Material.air)
+                    if (this.inTile.getMaterial(iblockstate) != Material.air)
                     {
                         this.inTile.onEntityCollidedWithBlock(this.worldObj, blockpos1, iblockstate, this);
                     }
@@ -364,11 +368,11 @@ public abstract class EntityCustomArrow extends EntityArrow
 
                 if (this.shootingEntity != null && entity != this.shootingEntity && entity instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)
                 {
-                    ((EntityPlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
+                    ((EntityPlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new SPacketChangeGameState(6, 0.0F));
                 }
             }
 
-            this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+            this.playSound(SoundEvents.entity_arrow_hit, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
             if (!(entity instanceof EntityEnderman))
             {
@@ -484,5 +488,10 @@ public abstract class EntityCustomArrow extends EntityArrow
         }
     }
 
+    @Override
+    protected ItemStack getArrowStack()
+    {
+        return new ItemStack(Items.arrow);
+    }
     
 }

@@ -15,8 +15,8 @@ public class ItemPoisonArrow extends ItemQuiverableArrow {
 	}
 
 	@Override
-	public EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, float damage, int itemUseDuration) {
-		return new EntityPoisonArrow(worldIn, playerIn, damage);
+	public EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, int itemUseDuration) {
+		return new EntityPoisonArrow(worldIn, playerIn);
 	}
 
 }

@@ -6,9 +6,12 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBow;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.unladenswallow.minecraft.quiver.ClientProxy;
 import net.unladenswallow.minecraft.quiver.FFQLogger;
+import net.unladenswallow.minecraft.quiver.ModFFQuiver;
 
 /**
  * This class represents an arrow that can be placed into the Bow and Quiver.
@@ -34,11 +37,16 @@ public class ItemQuiverableArrow extends Item {
 	protected ItemCustomBow bowToMimic;
 	protected Item itemUsedByBow;
 	
+	public ItemQuiverableArrow(String unlocalizedName, ItemCustomBow bowToMimic) {
+	    this.setUnlocalizedName(unlocalizedName);
+	    this.bowToMimic = bowToMimic;
+        this.itemUsedByBow = Items.arrow;
+        this.setRegistryName(ModFFQuiver.MODID, ClientProxy.stripItemPrefix(this.getUnlocalizedName()));
+        this.setCreativeTab(CreativeTabs.tabCombat);
+	}
+
 	public ItemQuiverableArrow() {
-		this.setUnlocalizedName("vanillaArrow");
-		this.bowToMimic = new ItemCustomBow("vanillaBow", "minecraft:bow"){};
-		this.itemUsedByBow = Items.arrow;
-		this.setCreativeTab(CreativeTabs.tabCombat);
+	    this("vanilla_arrow", new ItemCustomBow("vanilla_bow", "minecraft:bow"){});
 	}
 	
 	public String getName() {

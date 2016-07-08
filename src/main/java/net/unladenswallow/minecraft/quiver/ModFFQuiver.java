@@ -67,65 +67,62 @@ public class ModFFQuiver {
 	public void preInit(FMLPreInitializationEvent preInitEvent) {
 		ModFFQuiver.proxy.preInit(preInitEvent);
 		
-		emptyBowAndQuiver = new ItemBowAndQuiver("emptyBowAndQuiver", null);
+		emptyBowAndQuiver = new ItemBowAndQuiver("bowandquiver_empty", null);
 
 		vanillaArrow = new ItemQuiverableArrow();
-		vanillaArrowBowAndQuiver = new ItemBowAndQuiver("vanillaArrowBowAndQuiver", new ItemQuiverableArrow());
+		vanillaArrowBowAndQuiver = new ItemBowAndQuiver("bowandquiver_vanillaarrow", new ItemQuiverableArrow());
 		
 		torchArrow = new ItemTorchArrow();
-//		torchBow = new ItemTorchBow();
-		torchArrowBowAndQuiver = new ItemBowAndQuiver("torchArrowBowAndQuiver", torchArrow);
+		torchArrowBowAndQuiver = new ItemBowAndQuiver("bowandquiver_torcharrow", torchArrow);
 		
 		explodingArrow = new ItemExplodingArrow();
-//		explosionBow = new ItemExplosionBow();
-		explodingArrowBowAndQuiver = new ItemBowAndQuiver("explodingArrowBowAndQuiver", explodingArrow);
+		explodingArrowBowAndQuiver = new ItemBowAndQuiver("bowandquiver_explodingarrow", explodingArrow);
 		
-		(enderShard = new Item()).setUnlocalizedName("enderShard").setCreativeTab(CreativeTabs.tabMisc);
-		GameRegistry.registerItem(enderShard, "ender_shard");
+		(enderShard = new Item())
+		    .setUnlocalizedName("ender_shard")
+		    .setCreativeTab(CreativeTabs.tabMisc)
+		    .setRegistryName(MODID, "ender_shard");
+		GameRegistry.register(enderShard);
 		teleportArrow = new ItemTeleportArrow();
-//		teleportBow = new ItemTeleportBow();
-		teleportArrowBowAndQuiver = new ItemBowAndQuiver("teleportArrowBowAndQuiver", teleportArrow);
+		teleportArrowBowAndQuiver = new ItemBowAndQuiver("bowandquiver_teleportarrow", teleportArrow);
 		
 		ironArrow = new ItemIronArrow();
-		ironArrowBowAndQuiver = new ItemBowAndQuiver("ironArrowBowAndQuiver", ironArrow);
+		ironArrowBowAndQuiver = new ItemBowAndQuiver("bowandquiver_ironarrow", ironArrow);
 		
 		poisonArrow = new ItemPoisonArrow();
-		poisonArrowBowAndQuiver = new ItemBowAndQuiver("poisonArrowBowAndQuiver", poisonArrow);
+		poisonArrowBowAndQuiver = new ItemBowAndQuiver("bowandquiver_poisonarrow", poisonArrow);
 		
 		waterArrow = new ItemWaterArrow();
-		waterArrowBowAndQuiver = new ItemBowAndQuiver("waterArrowBowAndQuiver", waterArrow);
+		waterArrowBowAndQuiver = new ItemBowAndQuiver("bowandquiver_waterarrow", waterArrow);
 
 		lavaArrow = new ItemLavaArrow();
-		lavaArrowBowAndQuiver = new ItemBowAndQuiver("lavaArrowBowAndQuiver", lavaArrow);
+		lavaArrowBowAndQuiver = new ItemBowAndQuiver("bowandquiver_lavaarrow", lavaArrow);
 
-		GameRegistry.registerItem(emptyBowAndQuiver, "emptybowandquiver");
+        GameRegistry.register(emptyBowAndQuiver);
 
 		// Don't register vanillaArrow, as it is just a wrapper and doesn't represent a new item
-		GameRegistry.registerItem(vanillaArrowBowAndQuiver, "vanillaarrowbowandquiver");
+		GameRegistry.register(vanillaArrowBowAndQuiver);
 
-		GameRegistry.registerItem(torchArrow, "torch_arrow");
-//		GameRegistry.registerItem(torchBow, "torch_bow");
-		GameRegistry.registerItem(torchArrowBowAndQuiver, "torcharrowbowandquiver");
+        GameRegistry.register(torchArrow);
+		GameRegistry.register(torchArrowBowAndQuiver);
 		
-		GameRegistry.registerItem(explodingArrow, "exploding_arrow");
-//		GameRegistry.registerItem(explosionBow, "explosion_bow");
-		GameRegistry.registerItem(explodingArrowBowAndQuiver, "explodingarrowbowandquiver");
+		GameRegistry.register(explodingArrow);
+		GameRegistry.register(explodingArrowBowAndQuiver);
 
-		GameRegistry.registerItem(teleportArrow, "teleport_arrow");
-//		GameRegistry.registerItem(teleportBow, "teleport_bow");
-		GameRegistry.registerItem(teleportArrowBowAndQuiver, "teleportarrowbowandquiver");
+		GameRegistry.register(teleportArrow);
+		GameRegistry.register(teleportArrowBowAndQuiver);
 
-		GameRegistry.registerItem(ironArrow, "iron_arrow");
-		GameRegistry.registerItem(ironArrowBowAndQuiver, "ironarrowbowandquiver");
+		GameRegistry.register(ironArrow);
+		GameRegistry.register(ironArrowBowAndQuiver);
 
-		GameRegistry.registerItem(poisonArrow, "poison_arrow");
-		GameRegistry.registerItem(poisonArrowBowAndQuiver, "poisonarrowbowandquiver");
+		GameRegistry.register(poisonArrow);
+		GameRegistry.register(poisonArrowBowAndQuiver);
 		
-		GameRegistry.registerItem(waterArrow, "water_arrow");
-		GameRegistry.registerItem(waterArrowBowAndQuiver, "waterarrowbowandquiver");
+		GameRegistry.register(waterArrow);
+		GameRegistry.register(waterArrowBowAndQuiver);
 		
-		GameRegistry.registerItem(lavaArrow, "lava_arrow");
-		GameRegistry.registerItem(lavaArrowBowAndQuiver, "lavaarrowbowandquiver");
+		GameRegistry.register(lavaArrow);
+		GameRegistry.register(lavaArrowBowAndQuiver);
 		
 		ffqEventHandler = new FFQEventHandler();
 		MinecraftForge.EVENT_BUS.register(ffqEventHandler);
@@ -141,27 +138,6 @@ public class ModFFQuiver {
 	}
 	
 	private void addRecipes() {
-//		GameRegistry.addRecipe(new ItemStack(torchBow),
-//				"IS ",
-//				"I T",
-//				"IS ",
-//				'T', Blocks.torch,
-//				'S', Items.stick,
-//				'I', Items.string);
-//		GameRegistry.addRecipe(new ItemStack(explosionBow),
-//				"IS ",
-//				"I G",
-//				"IS ",
-//				'G', Items.gunpowder,
-//				'S', Items.stick,
-//				'I', Items.string);
-//		GameRegistry.addRecipe(new ItemStack(teleportBow),
-//				"IS ",
-//				"I E",
-//				"IS ",
-//				'E', Items.ender_pearl,
-//				'S', Items.stick,
-//				'I', Items.string);
 		GameRegistry.addRecipe(new ItemStack(Items.saddle),
 				"LLL",
 				"LIL",

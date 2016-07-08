@@ -8,9 +8,7 @@ import net.unladenswallow.minecraft.quiver.entity.EntityIronArrow;
 public class ItemIronArrow extends ItemQuiverableArrow {
 
 	public ItemIronArrow() {
-		super();
-		setUnlocalizedName("ironArrow");
-		this.bowToMimic = new ItemCustomBow("ironArrowBow", "minecraft:bow"){};
+		super("iron_arrow", new ItemCustomBow("ironArrowBow", "minecraft:bow"){});
 		this.itemUsedByBow = this;
 	}
 

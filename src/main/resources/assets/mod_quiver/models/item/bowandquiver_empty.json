@@ -1,5 +1,5 @@
 {
-    "parent":"mod_quiver:item/tool_item",
+    "parent":"item/bow",
     "textures": {
         "layer0":"mod_quiver:items/bowandquiver"
     }

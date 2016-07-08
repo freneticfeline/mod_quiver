@@ -8,9 +8,7 @@ import net.unladenswallow.minecraft.quiver.entity.EntityLavaArrow;
 public class ItemLavaArrow extends ItemQuiverableArrow {
 
 	public ItemLavaArrow() {
-		super();
-		setUnlocalizedName("lavaArrow");
-		this.bowToMimic = new ItemCustomBow("genericCustomBow", "minecraft:bow"){};
+		super("lava_arrow", new ItemCustomBow("genericCustomBow", "minecraft:bow"){});
 		this.itemUsedByBow = this;
 	}
 

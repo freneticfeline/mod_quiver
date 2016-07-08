@@ -20,6 +20,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.unladenswallow.minecraft.quiver.ClientProxy;
 import net.unladenswallow.minecraft.quiver.ModFFQuiver;
 
 public abstract class ItemCustomBow extends ItemBow {
@@ -32,6 +33,7 @@ public abstract class ItemCustomBow extends ItemBow {
 		this.setUnlocalizedName(unlocalizedName);
 		this.setModelBaseName(modelBaseName);
 		this.setCreativeTab(CreativeTabs.tabCombat);
+		this.setRegistryName(ModFFQuiver.MODID, ClientProxy.stripItemPrefix(this.getUnlocalizedName()));
 //		MEMLogger.info("ItemCustomBow <init>: " + getUnlocalizedName() + "; " + getModelBaseName() + "; " + Arrays.toString(bowPullIconNameArray));
 	}
 

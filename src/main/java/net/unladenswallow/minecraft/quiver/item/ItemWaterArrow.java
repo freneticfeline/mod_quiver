@@ -8,9 +8,7 @@ import net.unladenswallow.minecraft.quiver.entity.EntityWaterArrow;
 public class ItemWaterArrow extends ItemQuiverableArrow {
 
 	public ItemWaterArrow() {
-		super();
-		setUnlocalizedName("waterArrow");
-		this.bowToMimic = new ItemCustomBow("genericCustomBow", "minecraft:bow"){};
+		super("water_arrow", new ItemCustomBow("genericCustomBow", "minecraft:bow"){});
 		this.itemUsedByBow = this;
 	}
 

@@ -8,9 +8,7 @@ import net.unladenswallow.minecraft.quiver.entity.EntityPoisonArrow;
 public class ItemPoisonArrow extends ItemQuiverableArrow {
 
 	public ItemPoisonArrow() {
-		super();
-		setUnlocalizedName("poisonArrow");
-		this.bowToMimic = new ItemCustomBow("genericCustomBow", "minecraft:bow"){};
+		super("poison_arrow", new ItemCustomBow("genericCustomBow", "minecraft:bow"){});
 		this.itemUsedByBow = this;
 	}
 

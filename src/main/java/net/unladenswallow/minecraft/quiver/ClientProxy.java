@@ -20,54 +20,25 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init(FMLInitializationEvent e) {
         super.init(e);
-//        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-//    		.register(ModFFQuiver.torchBow, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "torch_bow"), "inventory"));
-//        ModelBakery.addVariantName(ModFFQuiver.torchBow, ModFFQuiver.MODID + ":torch_bow");
-//        ModelBakery.addVariantName(ModFFQuiver.torchBow, ModFFQuiver.MODID + ":torch_bow_pulling_0");
-//        ModelBakery.addVariantName(ModFFQuiver.torchBow, ModFFQuiver.MODID + ":torch_bow_pulling_1");
-//        ModelBakery.addVariantName(ModFFQuiver.torchBow, ModFFQuiver.MODID + ":torch_bow_pulling_2");
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-    		.register(ModFFQuiver.torchArrow, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "torch_arrow"), "inventory"));
-//        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-//    		.register(ModFFQuiver.explosionBow, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "explosion_bow"), "inventory"));
-//        ModelBakery.addVariantName(ModFFQuiver.explosionBow, ModFFQuiver.MODID + ":explosion_bow");
-//        ModelBakery.addVariantName(ModFFQuiver.explosionBow, ModFFQuiver.MODID + ":explosion_bow_pulling_0");
-//        ModelBakery.addVariantName(ModFFQuiver.explosionBow, ModFFQuiver.MODID + ":explosion_bow_pulling_1");
-//        ModelBakery.addVariantName(ModFFQuiver.explosionBow, ModFFQuiver.MODID + ":explosion_bow_pulling_2");
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-    		.register(ModFFQuiver.explodingArrow, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "exploding_arrow"), "inventory"));
-//        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-//    		.register(ModFFQuiver.teleportBow, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "teleport_bow"), "inventory"));
-//        ModelBakery.addVariantName(ModFFQuiver.teleportBow, ModFFQuiver.MODID + ":teleport_bow");
-//        ModelBakery.addVariantName(ModFFQuiver.teleportBow, ModFFQuiver.MODID + ":teleport_bow_pulling_0");
-//        ModelBakery.addVariantName(ModFFQuiver.teleportBow, ModFFQuiver.MODID + ":teleport_bow_pulling_1");
-//        ModelBakery.addVariantName(ModFFQuiver.teleportBow, ModFFQuiver.MODID + ":teleport_bow_pulling_2");
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-    		.register(ModFFQuiver.teleportArrow, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "teleport_arrow"), "inventory"));
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-    		.register(ModFFQuiver.ironArrow, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "iron_arrow"), "inventory"));
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-    		.register(ModFFQuiver.poisonArrow, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "poison_arrow"), "inventory"));
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-    		.register(ModFFQuiver.waterArrow, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "water_arrow"), "inventory"));
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-    		.register(ModFFQuiver.lavaArrow, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "lava_arrow"), "inventory"));
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-    		.register(ModFFQuiver.enderShard, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, "ender_shard"), "inventory"));
+    	registerItemModel(ModFFQuiver.torchArrow);
+    	registerItemModel(ModFFQuiver.explodingArrow);
+    	registerItemModel(ModFFQuiver.teleportArrow);
+    	registerItemModel(ModFFQuiver.ironArrow);
+    	registerItemModel(ModFFQuiver.poisonArrow);
+    	registerItemModel(ModFFQuiver.waterArrow);
+    	registerItemModel(ModFFQuiver.lavaArrow);
+    	registerItemModel(ModFFQuiver.enderShard);
 
-        registerItemModelWithVariants(ModFFQuiver.emptyBowAndQuiver, ModFFQuiver.MODID + ":bowandquiver_empty", "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.vanillaArrowBowAndQuiver, ModFFQuiver.MODID + ":bowandquiver_vanillaarrow", "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.torchArrowBowAndQuiver, ModFFQuiver.MODID + ":bowandquiver_torcharrow", "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.explodingArrowBowAndQuiver, ModFFQuiver.MODID + ":bowandquiver_explodingarrow", "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.teleportArrowBowAndQuiver, ModFFQuiver.MODID + ":bowandquiver_teleportarrow", "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.ironArrowBowAndQuiver, ModFFQuiver.MODID + ":bowandquiver_ironarrow", "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.poisonArrowBowAndQuiver, ModFFQuiver.MODID + ":bowandquiver_poisonarrow", "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.waterArrowBowAndQuiver, ModFFQuiver.MODID + ":bowandquiver_waterarrow", "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.lavaArrowBowAndQuiver, ModFFQuiver.MODID + ":bowandquiver_lavaarrow", "minecraft:bow", 3);
+        registerItemModelWithVariants(ModFFQuiver.emptyBowAndQuiver, "minecraft:bow", 3);
+        registerItemModelWithVariants(ModFFQuiver.vanillaArrowBowAndQuiver, "minecraft:bow", 3);
+        registerItemModelWithVariants(ModFFQuiver.torchArrowBowAndQuiver, "minecraft:bow", 3);
+        registerItemModelWithVariants(ModFFQuiver.explodingArrowBowAndQuiver, "minecraft:bow", 3);
+        registerItemModelWithVariants(ModFFQuiver.teleportArrowBowAndQuiver, "minecraft:bow", 3);
+        registerItemModelWithVariants(ModFFQuiver.ironArrowBowAndQuiver, "minecraft:bow", 3);
+        registerItemModelWithVariants(ModFFQuiver.poisonArrowBowAndQuiver, "minecraft:bow", 3);
+        registerItemModelWithVariants(ModFFQuiver.waterArrowBowAndQuiver, "minecraft:bow", 3);
+        registerItemModelWithVariants(ModFFQuiver.lavaArrowBowAndQuiver, "minecraft:bow", 3);
         
-//        MinecraftForge.EVENT_BUS.register(ModFFQuiver.torchBow);
-//		MinecraftForge.EVENT_BUS.register(ModFFQuiver.explosionBow);
-//		MinecraftForge.EVENT_BUS.register(ModFFQuiver.teleportBow);
 		MinecraftForge.EVENT_BUS.register(ModFFQuiver.emptyBowAndQuiver);
 		MinecraftForge.EVENT_BUS.register(ModFFQuiver.vanillaArrowBowAndQuiver);
 		MinecraftForge.EVENT_BUS.register(ModFFQuiver.torchArrowBowAndQuiver);
@@ -85,14 +56,16 @@ public class ClientProxy extends CommonProxy {
         super.postInit(e);
     }
     
-    private void registerItemModelWithVariants(Item bowAndQuiver, String itemModel, String modelBase, int numVariants) {
+    private void registerItemModelWithVariants(Item item, String modelBase, int numVariants) {
+        registerItemModel(item);
+    }
+    
+    private void registerItemModel(Item item) {
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-    		.register(bowAndQuiver, 0, new ModelResourceLocation(itemModel, "inventory"));
-// TODO: FIX THIS        
-//        ModelBakery.addVariantName(bowAndQuiver, itemModel);
-//        ModelBakery.addVariantName(bowAndQuiver, modelBase);
-//        for (int i = 0; i < numVariants; i++) {
-//	        ModelBakery.addVariantName(bowAndQuiver, modelBase + "_pulling_" + i);
-//        }
+        .register(item, 0, new ModelResourceLocation(new ResourceLocation(ModFFQuiver.MODID, stripItemPrefix(item.getUnlocalizedName())), "inventory"));
+    }
+    
+    public static String stripItemPrefix(String inString) {
+        return inString.replaceAll("item.", "");
     }
 }

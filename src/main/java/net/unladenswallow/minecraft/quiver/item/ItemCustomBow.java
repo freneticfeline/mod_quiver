@@ -249,7 +249,7 @@ public abstract class ItemCustomBow extends ItemBow {
 	public void fovUpdate(FOVUpdateEvent event) {
 		if (event.getEntity() instanceof EntityPlayer) {
 			if (event.getEntity().isHandActive() && event.getEntity().getActiveItemStack().getItem() == this) {
-				float fovModifier = getNewFovModifier(event.getEntity().getItemInUseCount());
+				float fovModifier = getNewFovModifier(event.getEntity().getItemInUseMaxCount()); // getItemInUseMaxCount() seems to be mis-named.  functionally, it is like the old getItemUseDuration()
 		        float fov = 1.0f;
 		        fov *= 1.0F - fovModifier * 0.15F;
 //				MEMLogger.info("ItemCustomBow fovUpdate(): itemUseDuration = " + event.entity.getItemInUseDuration() + "; fovModifier = " + fovModifier + "; newfov = " + fov);

@@ -16,7 +16,7 @@ public class EntityLavaArrow extends EntityCustomArrow {
 
 	public EntityLavaArrow(World worldIn, EntityLivingBase shooter) {
 		super(worldIn, shooter);
-		unlocalizedName = "lavaArrow";
+		this.setUnlocalizedName("lava_arrow");
 	}
 
 	@Override

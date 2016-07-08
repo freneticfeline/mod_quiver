@@ -12,7 +12,7 @@ public class EntityTeleportArrow extends EntityCustomArrow {
 
 	public EntityTeleportArrow(World worldIn, EntityLivingBase shooter) {
 		super(worldIn, shooter);
-		unlocalizedName = "teleportArrow";
+		this.setUnlocalizedName("teleport_arrow");
 	}
 
 	@Override

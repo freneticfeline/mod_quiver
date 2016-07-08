@@ -89,7 +89,7 @@ public abstract class ItemCustomBow extends ItemBow {
 	            //            MEMLogger.info("ItemCustomBow onPlayerStoppedUsing(): f = " + arrowDamage + "; j = " + itemUseDuration + "; timeLeft = " + timeLeft);
 
 	            EntityArrow entityarrow = getNewEntityArrow(worldIn, player, itemUseDuration);
-	            entityarrow.setDamage(arrowDamage * 2.0f);
+//	            FFQLogger.info("Created a(n) " + entityarrow.getName() + " [damage: " + entityarrow.getDamage() + "]");
 
 	            entityarrow.setIsCritical(shotIsCritical(itemUseDuration, arrowDamage));
 	            //            if (entityarrow.getIsCritical()) {
@@ -97,6 +97,7 @@ public abstract class ItemCustomBow extends ItemBow {
 	            //            }
 
 	            applyEnchantments(entityarrow, stack);
+	            initializeArrowVelocity(entityarrow, player, arrowDamage);
 
 	            takeDamage(1, stack, player);
 
@@ -121,7 +122,11 @@ public abstract class ItemCustomBow extends ItemBow {
 	    }
     }
 
-	protected void consumeAmmo(ItemStack stack, World worldIn, EntityPlayer playerIn) {
+	protected void initializeArrowVelocity(EntityArrow entityarrow, EntityPlayer player, float arrowDamage) {
+        entityarrow.func_184547_a(player, player.rotationPitch, player.rotationYaw, 0.0F, arrowDamage * 3.0F, 1.0F);
+    }
+
+    protected void consumeAmmo(ItemStack stack, World worldIn, EntityPlayer playerIn) {
         playerIn.inventory.clearMatchingItems(getItemUsedByBow(), -1, 1, null);
 	}
 

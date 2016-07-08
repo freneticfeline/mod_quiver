@@ -15,12 +15,11 @@ public class EntityExplodingArrow extends EntityCustomArrow {
 
 	public EntityExplodingArrow(World worldIn, EntityLivingBase shooter) {
 		super(worldIn, shooter);
-		unlocalizedName = "explodingArrow";
+		this.setUnlocalizedName("exploding_arrow");
 	}
 
 	public EntityExplodingArrow(World worldIn, EntityLivingBase shooter, float explosionRadiusModifier) {
-		super(worldIn, shooter);
-		unlocalizedName = "explodingArrow";
+		this(worldIn, shooter);
 		this.explosionRadius = this.explosionRadius * explosionRadiusModifier;
 	}
 

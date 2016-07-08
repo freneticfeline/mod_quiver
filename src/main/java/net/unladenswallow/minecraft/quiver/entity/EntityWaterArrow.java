@@ -16,7 +16,7 @@ public class EntityWaterArrow extends EntityCustomArrow {
 
 	public EntityWaterArrow(World worldIn, EntityLivingBase shooter) {
 		super(worldIn, shooter);
-		unlocalizedName = "waterArrow";
+		this.setUnlocalizedName("water_arrow");
 	}
 
 	@Override

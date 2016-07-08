@@ -22,7 +22,7 @@ public class EntityPoisonArrow extends EntityCustomArrow {
 	
 	public EntityPoisonArrow(World worldIn, EntityLivingBase shooter) {
 		super(worldIn, shooter);
-		unlocalizedName = "poisonArrow";
+		this.setUnlocalizedName("poison_arrow");
 	}
 
 	@Override

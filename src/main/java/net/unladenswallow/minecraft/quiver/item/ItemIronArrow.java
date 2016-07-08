@@ -12,7 +12,8 @@ public class ItemIronArrow extends ItemQuiverableArrow {
 		this.itemUsedByBow = this;
 	}
 
-	public EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, float damage, int itemUseDuration) {
+	@Override
+	public EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, int itemUseDuration) {
 		return new EntityIronArrow(worldIn, playerIn);
 	}
 

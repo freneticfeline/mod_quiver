@@ -15,7 +15,7 @@ public class EntityTorchArrow extends EntityCustomArrow {
 
 	public EntityTorchArrow(World worldIn, EntityLivingBase shooter) {
 		super(worldIn, shooter);
-		unlocalizedName = "torchArrow";
+		this.setUnlocalizedName("torch_arrow");
 	}
 
 	@Override

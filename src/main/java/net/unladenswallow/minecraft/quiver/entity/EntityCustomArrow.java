@@ -13,14 +13,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Items;
-import net.minecraft.init.PotionTypes;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPacketChangeGameState;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ReportedException;
@@ -29,8 +27,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
-import net.unladenswallow.minecraft.quiver.FFQLogger;
 
 /**
  * This class extends EntityArrow, with modifications to pull
@@ -39,7 +37,7 @@ import net.unladenswallow.minecraft.quiver.FFQLogger;
  * native arrow renderer until I figure out how to do custom rendering.
  * 
  */
-public abstract class EntityCustomArrow extends EntityArrow
+public abstract class EntityCustomArrow extends EntityTippedArrow
 {
 	protected String unlocalizedName = "customArrow";
     protected int xTile = -1;
@@ -204,7 +202,7 @@ public abstract class EntityCustomArrow extends EntityArrow
 //            	MEMLogger.info("EntityCustomArrow onUpdate(): movingobjectposition is not null");
                 if (rayTraceResult.entityHit != null)
                 {
-                	FFQLogger.info("EntityCustomArrow onUpdate(): I hit " + rayTraceResult.entityHit.getName());
+//                	FFQLogger.info("EntityCustomArrow onUpdate(): I hit " + rayTraceResult.entityHit.getName());
 
                 	/*
                 	 * Pulled out for subclass override
@@ -314,7 +312,7 @@ public abstract class EntityCustomArrow extends EntityArrow
 
 
 	protected void handleEntityHit(Entity entity) {
-//    	MEMLogger.info("EntityCustomArrow handleEntityHit()");
+//    	FFQLogger.info("EntityCustomArrow handleEntityHit():  my base damage is " + this.damage);
     	float f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
         int k = MathHelper.ceiling_double_int((double)f2 * this.damage);
 
@@ -327,11 +325,11 @@ public abstract class EntityCustomArrow extends EntityArrow
 
         if (this.shootingEntity == null)
         {
-        	damagesource = new EntityDamageSourceIndirect(this.unlocalizedName, this, this);
+        	damagesource = DamageSource.causeArrowDamage(this, this);
         }
         else
         {
-        	damagesource = new EntityDamageSourceIndirect(this.unlocalizedName, this, this.shootingEntity);
+        	damagesource = DamageSource.causeArrowDamage(this, this.shootingEntity);
         }
 
         if (this.isBurning() && !(entity instanceof EntityEnderman))
@@ -494,4 +492,16 @@ public abstract class EntityCustomArrow extends EntityArrow
         return new ItemStack(Items.arrow);
     }
     
+    @Override
+    public String getName() {
+        return I18n.translateToLocal(this.getUnlocalizedName() + ".name");
+    }
+    
+    public void setUnlocalizedName(String unlocalizedName) {
+        this.unlocalizedName = unlocalizedName;
+    }
+    
+    public String getUnlocalizedName() {
+        return "entity." + this.unlocalizedName;
+    }
 }

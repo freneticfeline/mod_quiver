@@ -15,7 +15,7 @@ import net.unladenswallow.minecraft.quiver.ModFFQuiver;
 public class EntityPoisonArrow extends EntityCustomArrow {
 
 	private static Potion EFFECT = MobEffects.poison;
-	private static int EFFECT_TICK_LENGTH = 200;
+	private static int EFFECT_TICK_LENGTH = 400;
 	private static int EFFECT_AMPLIFIER = 0;
 	private static boolean EFFECT_AMBIANT = true;
 	private static boolean EFFECT_SHOW_PARTICLES = true;

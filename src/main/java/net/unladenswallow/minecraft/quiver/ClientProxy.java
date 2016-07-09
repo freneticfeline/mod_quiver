@@ -1,7 +1,6 @@
 package net.unladenswallow.minecraft.quiver;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -24,20 +23,18 @@ public class ClientProxy extends CommonProxy {
     	registerItemModel(ModFFQuiver.explodingArrow);
     	registerItemModel(ModFFQuiver.teleportArrow);
     	registerItemModel(ModFFQuiver.ironArrow);
-    	registerItemModel(ModFFQuiver.poisonArrow);
     	registerItemModel(ModFFQuiver.waterArrow);
     	registerItemModel(ModFFQuiver.lavaArrow);
     	registerItemModel(ModFFQuiver.enderShard);
 
-        registerItemModelWithVariants(ModFFQuiver.emptyBowAndQuiver, "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.vanillaArrowBowAndQuiver, "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.torchArrowBowAndQuiver, "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.explodingArrowBowAndQuiver, "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.teleportArrowBowAndQuiver, "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.ironArrowBowAndQuiver, "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.poisonArrowBowAndQuiver, "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.waterArrowBowAndQuiver, "minecraft:bow", 3);
-        registerItemModelWithVariants(ModFFQuiver.lavaArrowBowAndQuiver, "minecraft:bow", 3);
+    	registerItemModel(ModFFQuiver.emptyBowAndQuiver);
+    	registerItemModel(ModFFQuiver.vanillaArrowBowAndQuiver);
+    	registerItemModel(ModFFQuiver.torchArrowBowAndQuiver);
+        registerItemModel(ModFFQuiver.explodingArrowBowAndQuiver);
+        registerItemModel(ModFFQuiver.teleportArrowBowAndQuiver);
+        registerItemModel(ModFFQuiver.ironArrowBowAndQuiver);
+        registerItemModel(ModFFQuiver.waterArrowBowAndQuiver);
+        registerItemModel(ModFFQuiver.lavaArrowBowAndQuiver);
         
 		MinecraftForge.EVENT_BUS.register(ModFFQuiver.emptyBowAndQuiver);
 		MinecraftForge.EVENT_BUS.register(ModFFQuiver.vanillaArrowBowAndQuiver);
@@ -45,7 +42,6 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(ModFFQuiver.explodingArrowBowAndQuiver);
 		MinecraftForge.EVENT_BUS.register(ModFFQuiver.teleportArrowBowAndQuiver);
 		MinecraftForge.EVENT_BUS.register(ModFFQuiver.ironArrowBowAndQuiver);
-		MinecraftForge.EVENT_BUS.register(ModFFQuiver.poisonArrowBowAndQuiver);
 		MinecraftForge.EVENT_BUS.register(ModFFQuiver.waterArrowBowAndQuiver);
 		MinecraftForge.EVENT_BUS.register(ModFFQuiver.lavaArrowBowAndQuiver);
 
@@ -54,10 +50,6 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void postInit(FMLPostInitializationEvent e) {
         super.postInit(e);
-    }
-    
-    private void registerItemModelWithVariants(Item item, String modelBase, int numVariants) {
-        registerItemModel(item);
     }
     
     private void registerItemModel(Item item) {

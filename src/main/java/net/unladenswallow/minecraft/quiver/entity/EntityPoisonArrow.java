@@ -7,10 +7,9 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.unladenswallow.minecraft.quiver.ModFFQuiver;
 
 public class EntityPoisonArrow extends EntityCustomArrow {
 
@@ -29,7 +28,7 @@ public class EntityPoisonArrow extends EntityCustomArrow {
     protected void handleInTileState(Block block, EnumFacing facing) {
         BlockPos blockpos = new BlockPos(this.xTile, this.yTile, this.zTile);
     	BlockPos facingBlockPos = facingBlock(blockpos, facing);
-		Block.spawnAsEntity(worldObj, facingBlockPos, new ItemStack(ModFFQuiver.poisonArrow));
+//		Block.spawnAsEntity(worldObj, facingBlockPos, new ItemStack(ModFFQuiver.poisonArrow));
 		this.setDead();
 	}
 	
@@ -46,7 +45,8 @@ public class EntityPoisonArrow extends EntityCustomArrow {
     @Override
     protected ItemStack getArrowStack()
     {
-        return new ItemStack(ModFFQuiver.poisonArrow);
+//        return new ItemStack(ModFFQuiver.poisonArrow);
+        return null;
     }
 
 }

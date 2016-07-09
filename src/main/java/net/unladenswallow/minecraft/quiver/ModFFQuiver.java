@@ -17,7 +17,6 @@ import net.unladenswallow.minecraft.quiver.item.ItemBowAndQuiver;
 import net.unladenswallow.minecraft.quiver.item.ItemExplodingArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemIronArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemLavaArrow;
-import net.unladenswallow.minecraft.quiver.item.ItemPoisonArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemQuiverableArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemTeleportArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemTorchArrow;
@@ -37,23 +36,17 @@ public class ModFFQuiver {
 	public static Item vanillaArrowBowAndQuiver;
 
 	public static ItemQuiverableArrow torchArrow;
-//	public static Item torchBow;
 	public static Item torchArrowBowAndQuiver;
 
 	public static ItemQuiverableArrow explodingArrow;
-//	public static Item explosionBow;
 	public static Item explodingArrowBowAndQuiver;
 
 	public static Item enderShard;
 	public static ItemQuiverableArrow teleportArrow;
-//	public static Item teleportBow;
 	public static Item teleportArrowBowAndQuiver;
 
 	public static ItemQuiverableArrow ironArrow;
 	public static Item ironArrowBowAndQuiver;
-	
-	public static ItemQuiverableArrow poisonArrow;
-	public static Item poisonArrowBowAndQuiver;
 	
 	public static ItemQuiverableArrow waterArrow;
 	public static Item waterArrowBowAndQuiver;
@@ -89,9 +82,6 @@ public class ModFFQuiver {
 		ironArrow = new ItemIronArrow();
 		ironArrowBowAndQuiver = new ItemBowAndQuiver("bowandquiver_ironarrow", ironArrow);
 		
-		poisonArrow = new ItemPoisonArrow();
-		poisonArrowBowAndQuiver = new ItemBowAndQuiver("bowandquiver_poisonarrow", poisonArrow);
-		
 		waterArrow = new ItemWaterArrow();
 		waterArrowBowAndQuiver = new ItemBowAndQuiver("bowandquiver_waterarrow", waterArrow);
 
@@ -115,9 +105,6 @@ public class ModFFQuiver {
 		GameRegistry.register(ironArrow);
 		GameRegistry.register(ironArrowBowAndQuiver);
 
-		GameRegistry.register(poisonArrow);
-		GameRegistry.register(poisonArrowBowAndQuiver);
-		
 		GameRegistry.register(waterArrow);
 		GameRegistry.register(waterArrowBowAndQuiver);
 		
@@ -126,7 +113,6 @@ public class ModFFQuiver {
 		
 		ffqEventHandler = new FFQEventHandler();
 		MinecraftForge.EVENT_BUS.register(ffqEventHandler);
-		FMLCommonHandler.instance().bus().register(ffqEventHandler);
 	}
 	
 	@EventHandler
@@ -171,8 +157,6 @@ public class ModFFQuiver {
 				new Object[] {Blocks.torch, Items.arrow});
 		GameRegistry.addShapelessRecipe(new ItemStack(explodingArrow), 
 				new Object[] {Items.arrow, Items.gunpowder});
-		GameRegistry.addShapelessRecipe(new ItemStack(poisonArrow, 3),
-				new Object[] {Items.arrow, Items.arrow, Items.arrow, new ItemStack(Items.potionitem, 1, 8196)});
 		GameRegistry.addShapelessRecipe(new ItemStack(teleportArrow), 
 				new Object[] {Items.arrow, ModFFQuiver.enderShard});
 		GameRegistry.addShapelessRecipe(new ItemStack(enderShard, 4), 
@@ -189,7 +173,6 @@ public class ModFFQuiver {
 		((ItemBowAndQuiver)explodingArrowBowAndQuiver).addRepairRecipes();
 		((ItemBowAndQuiver)teleportArrowBowAndQuiver).addRepairRecipes();
 		((ItemBowAndQuiver)ironArrowBowAndQuiver).addRepairRecipes();
-		((ItemBowAndQuiver)poisonArrowBowAndQuiver).addRepairRecipes();
 		((ItemBowAndQuiver)waterArrowBowAndQuiver).addRepairRecipes();
 		((ItemBowAndQuiver)lavaArrowBowAndQuiver).addRepairRecipes();
 

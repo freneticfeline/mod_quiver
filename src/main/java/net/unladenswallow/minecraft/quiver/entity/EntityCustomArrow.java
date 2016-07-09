@@ -31,9 +31,9 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 /**
- * This class extends EntityArrow, with modifications to pull
+ * This class extends EntityTippedArrow, with modifications to pull
  * certain behaviors out to their own functions so that they can be overridden
- * by subclasses.  By extending EntityArrow, custom arrows can be rendered by the
+ * by subclasses.  By extending EntityTippedArrow, custom arrows can be rendered by the
  * native arrow renderer until I figure out how to do custom rendering.
  * 
  */

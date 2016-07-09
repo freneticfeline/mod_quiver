@@ -1,3 +1,8 @@
+1.9-1.2
+=======
+Update for 1.9
+Remove Poison Arrow (and its Bow and Quiver), as it is redundant with the new tipped arrows in 1.9
+
 1.8.9-1.1
 =========
 Update for 1.8.9

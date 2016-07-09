@@ -8,7 +8,6 @@ This is a Minecraft mod that adds a Bow and Quiver and various additional types 
 - Torch Arrow
 - Teleport Arrow
 - Exploding Arrow
-- Poison Arrow
 - Water Arrow
 - Lava Arrow
 - Ender Shard
@@ -46,11 +45,6 @@ it will cause an explosion at the point of impact.  The strength of the explosio
 length of time that the bow is held before release.  Hold for 30 seconds for a massively devastating
 explosion.
 
-### Poison Arrow
-This arrow is constructed with a shapeless recipe from 3 normal Arrows and a Potion of Poison, and
-results in 3 Poison Arrows.  The Poison Arrow will have the same effect on an entity as the Potion of
-Poison.  If the Poison Arrow does not hit an entity, it is recoverable.
-
 ### Water Arrow
 This arrow is constructed with a shapeless recipe from 3 normal Arrows and a Bucket of Water, and
 results in 3 Water Arrows.  When fired, it will create a block of Water at the point of impact, as
@@ -74,9 +68,11 @@ as the Quiver texture that exists but is unused in vanilla Minecraft.
 ## Installation Requirements
 FF Quiver Mod versions 1.8-x.x require Minecraft 1.8 with compatible version
 of MinecraftForge installed.
+FF Quiever Mod versions 1.8.9-x.x require Minecraft 1.8.9 with compatible version of MinecraftForge installed.
+FF Quiever Mod versions 1.9-x.x require Minecraft 1.9 with compatible version of MinecraftForge installed.
 
 ## Installation Instructions
-Copy the `mod_ffQuiver_forge-1.8-x.x.jar` file to the `mods` directory in your Minecraft
+Copy the `mod_ffQuiver_forge-1.x-x.x.jar` file to the `mods` directory in your Minecraft
 data directory.
 
 ## Usage Instructions

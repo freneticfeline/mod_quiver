@@ -6,7 +6,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -23,7 +22,7 @@ import net.unladenswallow.minecraft.quiver.item.ItemTorchArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemWaterArrow;
 
 
-@Mod(modid = ModFFQuiver.MODID, useMetadata = true)
+@Mod(modid = ModFFQuiver.MODID, useMetadata = true, acceptedMinecraftVersions="[1.9,1.10)", acceptableRemoteVersions="[1.9,1.10)")
 public class ModFFQuiver {
 
 	public static final String MODID = "mod_quiver";

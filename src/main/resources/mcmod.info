@@ -11,6 +11,6 @@
   "credits": "The Forge and FML team.",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["required-after:Forge@[12.16.1,)"]
 }
 ]

@@ -1,3 +1,8 @@
+1.9-1.2.1
+=========
+Fix server side crash bug
+Unified build for 1.9/1.9.4
+
 1.9-1.2
 =======
 Update for 1.9

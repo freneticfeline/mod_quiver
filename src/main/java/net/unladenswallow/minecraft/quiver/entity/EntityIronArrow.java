@@ -2,7 +2,6 @@ package net.unladenswallow.minecraft.quiver.entity;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
-import net.unladenswallow.minecraft.quiver.FFQLogger;
 
 public class EntityIronArrow extends EntityCustomArrow {
 

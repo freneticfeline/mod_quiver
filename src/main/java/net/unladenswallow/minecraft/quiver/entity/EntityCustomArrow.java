@@ -98,7 +98,7 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
         if (block.getMaterial(iblockstate) != Material.air)
         {
 //            block.setBlockBoundsBasedOnState(this.worldObj, blockpos);
-            AxisAlignedBB axisalignedbb = block.getCollisionBoundingBox(iblockstate, this.worldObj, blockpos);
+            AxisAlignedBB axisalignedbb = iblockstate.getSelectedBoundingBox(this.worldObj, blockpos);
 
             if (axisalignedbb != null && axisalignedbb.isVecInside(new Vec3d(this.posX, this.posY, this.posZ)))
             {

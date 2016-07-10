@@ -24,7 +24,7 @@ public class EntityLavaArrow extends EntityCustomArrow {
         BlockPos blockpos = new BlockPos(this.xTile, this.yTile, this.zTile);
     	BlockPos facingBlockPos = facingBlock(blockpos, facing);
 //    	worldObj.setBlockState(facingBlockPos, Blocks.water.getDefaultState());
-    	ItemBucket waterBucket = (ItemBucket)(Items.lava_bucket);
+    	ItemBucket waterBucket = (ItemBucket)(Items.LAVA_BUCKET);
     	waterBucket.tryPlaceContainedLiquid((EntityPlayer)this.shootingEntity, this.worldObj, facingBlockPos);
     	this.setDead();
 	}
@@ -33,7 +33,7 @@ public class EntityLavaArrow extends EntityCustomArrow {
 	protected void handleEntityHit(Entity entity) {
         BlockPos blockpos = new BlockPos(this.posX, this.posY, this.posZ);
 //		Block.spawnAsEntity(worldObj, blockpos, new ItemStack(ModFreneticFolly.waterArrow));
-    	ItemBucket waterBucket = (ItemBucket)(Items.lava_bucket);
+    	ItemBucket waterBucket = (ItemBucket)(Items.LAVA_BUCKET);
 //    	FFLogger.info("EntityLavaArrow handleEntityHit: trying to place a block of lava at " + blockpos);
     	waterBucket.tryPlaceContainedLiquid((EntityPlayer)this.shootingEntity, this.worldObj, blockpos);
 		this.setDead();

@@ -95,10 +95,10 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
         IBlockState iblockstate = this.worldObj.getBlockState(blockpos);
         Block block = iblockstate.getBlock();
 
-        if (block.getMaterial(iblockstate) != Material.air)
+        if (iblockstate.getMaterial() != Material.AIR)
         {
 //            block.setBlockBoundsBasedOnState(this.worldObj, blockpos);
-            AxisAlignedBB axisalignedbb = block.getCollisionBoundingBox(iblockstate, this.worldObj, blockpos);
+            AxisAlignedBB axisalignedbb = iblockstate.getCollisionBoundingBox(this.worldObj, blockpos);
 
             if (axisalignedbb != null && axisalignedbb.isVecInside(new Vec3d(this.posX, this.posY, this.posZ)))
             {
@@ -228,12 +228,12 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
                     this.posX -= this.motionX / (double)f3 * 0.05000000074505806D;
                     this.posY -= this.motionY / (double)f3 * 0.05000000074505806D;
                     this.posZ -= this.motionZ / (double)f3 * 0.05000000074505806D;
-                    this.playSound(SoundEvents.entity_arrow_hit, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+                    this.playSound(SoundEvents.ENTITY_ARROW_HIT, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
                     this.inGround = true;
                     this.arrowShake = 7;
                     this.setIsCritical(false);
 
-                    if (this.inTile.getMaterial(iblockstate) != Material.air)
+                    if (iblockstate.getMaterial() != Material.AIR)
                     {
                         this.inTile.onEntityCollidedWithBlock(this.worldObj, blockpos1, iblockstate, this);
                     }
@@ -366,11 +366,11 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
 
                 if (this.shootingEntity != null && entity != this.shootingEntity && entity instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)
                 {
-                    ((EntityPlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new SPacketChangeGameState(6, 0.0F));
+                    ((EntityPlayerMP)this.shootingEntity).connection.sendPacket(new SPacketChangeGameState(6, 0.0F));
                 }
             }
 
-            this.playSound(SoundEvents.entity_arrow_hit, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+            this.playSound(SoundEvents.ENTITY_ARROW_HIT, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
             if (!(entity instanceof EntityEnderman))
             {
@@ -489,7 +489,7 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
     @Override
     protected ItemStack getArrowStack()
     {
-        return new ItemStack(Items.arrow);
+        return new ItemStack(Items.ARROW);
     }
     
     @Override

@@ -22,8 +22,8 @@ public class EntityTorchArrow extends EntityCustomArrow {
     protected void handleInTileState(Block block, EnumFacing facing) {
         BlockPos blockpos = new BlockPos(this.xTile, this.yTile, this.zTile);
     	BlockPos facingBlockPos = facingBlock(blockpos, facing);
-    	if (facing != EnumFacing.DOWN && Blocks.torch.canPlaceBlockAt(worldObj, facingBlockPos)) {
-        	worldObj.setBlockState(facingBlockPos, Blocks.torch.getDefaultState().withProperty(BlockTorch.FACING, swapZFacing(facing)));
+    	if (facing != EnumFacing.DOWN && Blocks.TORCH.canPlaceBlockAt(worldObj, facingBlockPos)) {
+        	worldObj.setBlockState(facingBlockPos, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, swapZFacing(facing)));
     	} else {
     		Block.spawnAsEntity(worldObj, facingBlockPos, new ItemStack(ModFFQuiver.torchArrow));
     	}

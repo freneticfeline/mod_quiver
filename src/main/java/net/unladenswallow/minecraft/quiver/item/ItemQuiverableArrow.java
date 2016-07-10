@@ -40,9 +40,9 @@ public class ItemQuiverableArrow extends Item {
 	public ItemQuiverableArrow(String unlocalizedName, ItemCustomBow bowToMimic) {
 	    this.setUnlocalizedName(unlocalizedName);
 	    this.bowToMimic = bowToMimic;
-        this.itemUsedByBow = Items.arrow;
+        this.itemUsedByBow = Items.ARROW;
         this.setRegistryName(ModFFQuiver.MODID, ClientProxy.stripItemPrefix(this.getUnlocalizedName()));
-        this.setCreativeTab(CreativeTabs.tabCombat);
+        this.setCreativeTab(CreativeTabs.COMBAT);
 	}
 
 	public ItemQuiverableArrow() {

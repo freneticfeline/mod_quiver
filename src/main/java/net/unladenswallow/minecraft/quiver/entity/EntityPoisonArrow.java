@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class EntityPoisonArrow extends EntityCustomArrow {
 
-	private static Potion EFFECT = MobEffects.poison;
+	private static Potion EFFECT = MobEffects.POISON;
 	private static int EFFECT_TICK_LENGTH = 400;
 	private static int EFFECT_AMPLIFIER = 0;
 	private static boolean EFFECT_AMBIANT = true;

@@ -151,7 +151,7 @@ public class ItemBowAndQuiver extends ItemCustomBow {
 
 	@Override
 	protected void takeDamage(int i, ItemStack stack, EntityPlayer playerIn) {
-		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.infinity, stack) == 0) {
+		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) == 0) {
 			stack.damageItem(1, playerIn);
 		}
         if (stack.getItemDamage() == stack.getMaxDamage()) {

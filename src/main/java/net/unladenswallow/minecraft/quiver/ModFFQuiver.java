@@ -22,7 +22,7 @@ import net.unladenswallow.minecraft.quiver.item.ItemTorchArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemWaterArrow;
 
 
-@Mod(modid = ModFFQuiver.MODID, useMetadata = true, acceptedMinecraftVersions="[1.9,1.10)", acceptableRemoteVersions="[1.9,1.10)")
+@Mod(modid = ModFFQuiver.MODID, useMetadata = true, acceptedMinecraftVersions="[1.10,1.11)", acceptableRemoteVersions="[1.10,1.11)")
 public class ModFFQuiver {
 
 	public static final String MODID = "mod_quiver";
@@ -72,7 +72,7 @@ public class ModFFQuiver {
 		
 		(enderShard = new Item())
 		    .setUnlocalizedName("ender_shard")
-		    .setCreativeTab(CreativeTabs.tabMisc)
+		    .setCreativeTab(CreativeTabs.MISC)
 		    .setRegistryName(MODID, "ender_shard");
 		GameRegistry.register(enderShard);
 		teleportArrow = new ItemTeleportArrow();
@@ -123,49 +123,49 @@ public class ModFFQuiver {
 	}
 	
 	private void addRecipes() {
-		GameRegistry.addRecipe(new ItemStack(Items.saddle),
+		GameRegistry.addRecipe(new ItemStack(Items.SADDLE),
 				"LLL",
 				"LIL",
 				"I I",
-				'L', Items.leather,
-				'I', Items.iron_ingot);
+				'L', Items.LEATHER,
+				'I', Items.IRON_INGOT);
 		GameRegistry.addRecipe(new ItemStack(ironArrow, 4),
 				"L",
 				"I",
 				"F",
-				'L', Items.flint,
-				'I', Items.iron_ingot,
-				'F', Items.feather);
+				'L', Items.FLINT,
+				'I', Items.IRON_INGOT,
+				'F', Items.FEATHER);
 
 		GameRegistry.addRecipe(new ItemStack(emptyBowAndQuiver, 1),
 				"LTS",
 				"TLS",
 				"LTS",
-				'L', Items.leather,
-				'T', Items.stick,
-				'S', Items.string);
+				'L', Items.LEATHER,
+				'T', Items.STICK,
+				'S', Items.STRING);
 		GameRegistry.addRecipe(new ItemStack(emptyBowAndQuiver, 1),
 				"STL",
 				"SLT",
 				"STL",
-				'L', Items.leather,
-				'T', Items.stick,
-				'S', Items.string);
+				'L', Items.LEATHER,
+				'T', Items.STICK,
+				'S', Items.STRING);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(torchArrow),
-				new Object[] {Blocks.torch, Items.arrow});
+				new Object[] {Blocks.TORCH, Items.ARROW});
 		GameRegistry.addShapelessRecipe(new ItemStack(explodingArrow), 
-				new Object[] {Items.arrow, Items.gunpowder});
+				new Object[] {Items.ARROW, Items.GUNPOWDER});
 		GameRegistry.addShapelessRecipe(new ItemStack(teleportArrow), 
-				new Object[] {Items.arrow, ModFFQuiver.enderShard});
+				new Object[] {Items.ARROW, ModFFQuiver.enderShard});
 		GameRegistry.addShapelessRecipe(new ItemStack(enderShard, 4), 
-				new Object[] {Items.ender_pearl});
-		GameRegistry.addShapelessRecipe(new ItemStack(Items.ender_pearl), 
+				new Object[] {Items.ENDER_PEARL});
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.ENDER_PEARL), 
 				new Object[] {enderShard, enderShard, enderShard, enderShard});
 		GameRegistry.addShapelessRecipe(new ItemStack(waterArrow, 3), 
-				new Object[] {Items.arrow, Items.arrow, Items.arrow, Items.water_bucket});
+				new Object[] {Items.ARROW, Items.ARROW, Items.ARROW, Items.WATER_BUCKET});
 		// Only allow 1 lava arrow from lava bucket.  Otherwise it would turn lava into a renewable resource
-		GameRegistry.addShapelessRecipe(new ItemStack(lavaArrow), new Object[] {Items.arrow, Items.lava_bucket});
+		GameRegistry.addShapelessRecipe(new ItemStack(lavaArrow), new Object[] {Items.ARROW, Items.LAVA_BUCKET});
 
 		((ItemBowAndQuiver)vanillaArrowBowAndQuiver).addRepairRecipes();
 		((ItemBowAndQuiver)torchArrowBowAndQuiver).addRepairRecipes();

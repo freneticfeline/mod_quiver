@@ -6,8 +6,7 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBow;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 import net.unladenswallow.minecraft.quiver.ClientProxy;
 import net.unladenswallow.minecraft.quiver.FFQLogger;
@@ -40,9 +39,9 @@ public class ItemQuiverableArrow extends Item {
 	public ItemQuiverableArrow(String unlocalizedName, ItemCustomBow bowToMimic) {
 	    this.setUnlocalizedName(unlocalizedName);
 	    this.bowToMimic = bowToMimic;
-        this.itemUsedByBow = Items.arrow;
+        this.itemUsedByBow = Items.ARROW;
         this.setRegistryName(ModFFQuiver.MODID, ClientProxy.stripItemPrefix(this.getUnlocalizedName()));
-        this.setCreativeTab(CreativeTabs.tabCombat);
+        this.setCreativeTab(CreativeTabs.COMBAT);
 	}
 
 	public ItemQuiverableArrow() {
@@ -50,7 +49,7 @@ public class ItemQuiverableArrow extends Item {
 	}
 	
 	public String getName() {
-        return ("" + I18n.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
+        return ("" + I18n.format(this.getUnlocalizedName() + ".name", new Object[0])).trim();
 	}
 	
 	public Item getItemUsedByBow() {

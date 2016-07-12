@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -27,7 +28,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 /**
@@ -95,12 +95,12 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
         IBlockState iblockstate = this.worldObj.getBlockState(blockpos);
         Block block = iblockstate.getBlock();
 
-        if (block.getMaterial(iblockstate) != Material.air)
+        if (iblockstate.getMaterial() != Material.AIR)
         {
 //            block.setBlockBoundsBasedOnState(this.worldObj, blockpos);
-            AxisAlignedBB axisalignedbb = iblockstate.getSelectedBoundingBox(this.worldObj, blockpos);
+            AxisAlignedBB axisalignedbb = iblockstate.getCollisionBoundingBox(this.worldObj, blockpos);
 
-            if (axisalignedbb != null && axisalignedbb.isVecInside(new Vec3d(this.posX, this.posY, this.posZ)))
+            if (axisalignedbb != Block.NULL_AABB && axisalignedbb.offset(blockpos).isVecInside(new Vec3d(this.posX, this.posY, this.posZ)))
             {
                 this.inGround = true;
             }
@@ -228,12 +228,12 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
                     this.posX -= this.motionX / (double)f3 * 0.05000000074505806D;
                     this.posY -= this.motionY / (double)f3 * 0.05000000074505806D;
                     this.posZ -= this.motionZ / (double)f3 * 0.05000000074505806D;
-                    this.playSound(SoundEvents.entity_arrow_hit, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+                    this.playSound(SoundEvents.ENTITY_ARROW_HIT, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
                     this.inGround = true;
                     this.arrowShake = 7;
                     this.setIsCritical(false);
 
-                    if (this.inTile.getMaterial(iblockstate) != Material.air)
+                    if (iblockstate.getMaterial() != Material.AIR)
                     {
                         this.inTile.onEntityCollidedWithBlock(this.worldObj, blockpos1, iblockstate, this);
                     }
@@ -366,11 +366,11 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
 
                 if (this.shootingEntity != null && entity != this.shootingEntity && entity instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)
                 {
-                    ((EntityPlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new SPacketChangeGameState(6, 0.0F));
+                    ((EntityPlayerMP)this.shootingEntity).connection.sendPacket(new SPacketChangeGameState(6, 0.0F));
                 }
             }
 
-            this.playSound(SoundEvents.entity_arrow_hit, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+            this.playSound(SoundEvents.ENTITY_ARROW_HIT, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
             if (!(entity instanceof EntityEnderman))
             {
@@ -489,12 +489,12 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
     @Override
     protected ItemStack getArrowStack()
     {
-        return new ItemStack(Items.arrow);
+        return new ItemStack(Items.ARROW);
     }
     
     @Override
     public String getName() {
-        return I18n.translateToLocal(this.getUnlocalizedName() + ".name");
+        return I18n.format(this.getUnlocalizedName() + ".name", new Object[0]);
     }
     
     public void setUnlocalizedName(String unlocalizedName) {

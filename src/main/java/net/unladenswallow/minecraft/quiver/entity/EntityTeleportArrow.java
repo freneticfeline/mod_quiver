@@ -28,7 +28,7 @@ public class EntityTeleportArrow extends EntityCustomArrow {
             {
                 EntityPlayerMP entityplayermp = (EntityPlayerMP)this.shootingEntity;
 
-                if (entityplayermp.playerNetServerHandler.getNetworkManager().isChannelOpen() && entityplayermp.worldObj == this.worldObj && !entityplayermp.isPlayerSleeping())
+                if (entityplayermp.connection.getNetworkManager().isChannelOpen() && entityplayermp.worldObj == this.worldObj && !entityplayermp.isPlayerSleeping())
                 {
                     net.minecraftforge.event.entity.living.EnderTeleportEvent event = new net.minecraftforge.event.entity.living.EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, 5.0F);
                     if (!net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event))

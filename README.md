@@ -66,13 +66,11 @@ The idea of a Bow and Quiver was inspired by a number of existing "More Weapons"
 as the Quiver texture that exists but is unused in vanilla Minecraft.
 
 ## Installation Requirements
-FF Quiver Mod versions 1.8-x.x require Minecraft 1.8 with compatible version
+FF Quiver Mod versions 1.x-y.z require Minecraft 1.x with compatible version
 of MinecraftForge installed.
-FF Quiever Mod versions 1.8.9-x.x require Minecraft 1.8.9 with compatible version of MinecraftForge installed.
-FF Quiever Mod versions 1.9-x.x require Minecraft 1.9 with compatible version of MinecraftForge installed.
 
 ## Installation Instructions
-Copy the `mod_ffQuiver_forge-1.x-x.x.jar` file to the `mods` directory in your Minecraft
+Copy the `mod_ffQuiver_forge-1.x-y.z.jar` file to the `mods` directory in your Minecraft
 data directory.
 
 ## Usage Instructions

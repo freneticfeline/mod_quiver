@@ -77,7 +77,7 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
     {
         super.onUpdate();
         
-//        MEMLogger.info("EntityCustomArrow [" + System.identityHashCode(this) + "] onUpdate()");
+//        FFQLogger.info("EntityCustomArrow [%s] onUpdate()", this.getClass().getName());
         
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F)
         {
@@ -199,10 +199,10 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
 
             if (rayTraceResult != null)
             {
-//            	MEMLogger.info("EntityCustomArrow onUpdate(): movingobjectposition is not null");
+//            	FFQLogger.info("EntityCustomArrow onUpdate(): rayTraceResult is not null");
                 if (rayTraceResult.entityHit != null)
                 {
-//                	FFQLogger.info("EntityCustomArrow onUpdate(): I hit " + rayTraceResult.entityHit.getName());
+//                	FFQLogger.info("EntityCustomArrow onUpdate(): I hit %s", rayTraceResult.entityHit.getName());
 
                 	/*
                 	 * Pulled out for subclass override
@@ -312,9 +312,9 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
 
 
 	protected void handleEntityHit(Entity entity) {
-//    	FFQLogger.info("EntityCustomArrow handleEntityHit():  my base damage is " + this.damage);
+//    	FFQLogger.info("EntityCustomArrow handleEntityHit(): [%s] with base damage = %f", this.getClass().getName(), this.getDamage());
     	float f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
-        int k = MathHelper.ceiling_double_int((double)f2 * this.damage);
+        int k = MathHelper.ceiling_double_int((double)f2 * this.getDamage());
 
         if (this.getIsCritical())
         {

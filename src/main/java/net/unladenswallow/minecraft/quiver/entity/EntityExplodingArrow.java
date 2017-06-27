@@ -25,13 +25,13 @@ public class EntityExplodingArrow extends EntityCustomArrow {
 
 	@Override
     protected void handleInTileState(Block block, EnumFacing facing) {
-    	this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, this.explosionRadius, true);
+    	this.world.createExplosion(this, this.posX, this.posY, this.posZ, this.explosionRadius, true);
     	this.setDead();
 	}
 	
 	@Override
 	protected void handleEntityHit(Entity entity) {
-    	this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, this.explosionRadius, true);
+    	this.world.createExplosion(this, this.posX, this.posY, this.posZ, this.explosionRadius, true);
 		this.setDead();
 	}
 	

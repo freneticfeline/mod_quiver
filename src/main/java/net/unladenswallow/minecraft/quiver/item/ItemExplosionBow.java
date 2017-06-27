@@ -39,15 +39,15 @@ public class ItemExplosionBow extends ItemCustomBow {
 	@Override
 	protected EntityArrow getNewEntityArrow(World worldIn, EntityPlayer playerIn, int itemUseDuration) {
         float radiusMod = 1.0F;
-        if (itemUseDuration > 500) {
-        	radiusMod = 25.0F;
-        } else if (itemUseDuration > 200) {
-        	radiusMod = 11.0F;
-        } else if (itemUseDuration > 150) {
-        	radiusMod = 7.0F;
-        } else if (itemUseDuration > 100) {
-        	radiusMod = 4.0F;
-        } else if (itemUseDuration > 50) {
+        if (itemUseDuration > 300) {
+        	radiusMod = 30.0F;
+        } else if (itemUseDuration > 160) {
+        	radiusMod = 14.0F;
+        } else if (itemUseDuration > 120) {
+        	radiusMod = 9.0F;
+        } else if (itemUseDuration > 80) {
+        	radiusMod = 5.0F;
+        } else if (itemUseDuration > 40) {
         	radiusMod = 2.0F;
         }
 

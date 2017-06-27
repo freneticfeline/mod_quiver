@@ -8,6 +8,7 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -156,7 +157,7 @@ public class ItemBowAndQuiver extends ItemCustomBow {
 		}
         if (stack.getItemDamage() == stack.getMaxDamage()) {
 //        	FFLogger.info("ItemBowAndQuiver takeDamage(): Quiver empty.  Reverting to default state.");
-        	playerIn.getHeldItemMainhand().setItem(ModFFQuiver.emptyBowAndQuiver);
+        	playerIn.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ModFFQuiver.emptyBowAndQuiver));
         	playerIn.getHeldItemMainhand().setItemDamage(0);
         }
 //        logCurrentStackState(stack);

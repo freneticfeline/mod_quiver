@@ -29,6 +29,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.unladenswallow.minecraft.quiver.FFQLogger;
 
 /**
  * This class extends EntityTippedArrow, with modifications to pull
@@ -81,7 +82,7 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
         
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F)
         {
-            float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+            float f = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
             this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
             this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(this.motionY, (double)f) * 180.0D / Math.PI);
         }
@@ -92,13 +93,13 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
 //        MEMLogger.info("EntityCustomArrow onUpdate(): prevPos = " + (new BlockPos(this.prevPosX, this.prevPosY, this.prevPosZ)).toString());
 //        MEMLogger.info("EntityCustomArrow onUpdate(): motion = [x=" + this.motionX + ", y=" + this.motionY + ", z=" + this.motionZ + "]");
         
-        IBlockState iblockstate = this.worldObj.getBlockState(blockpos);
+        IBlockState iblockstate = this.world.getBlockState(blockpos);
         Block block = iblockstate.getBlock();
 
         if (iblockstate.getMaterial() != Material.AIR)
         {
-//            block.setBlockBoundsBasedOnState(this.worldObj, blockpos);
-            AxisAlignedBB axisalignedbb = iblockstate.getCollisionBoundingBox(this.worldObj, blockpos);
+//            block.setBlockBoundsBasedOnState(this.world, blockpos);
+            AxisAlignedBB axisalignedbb = iblockstate.getCollisionBoundingBox(this.world, blockpos);
 
             if (axisalignedbb != Block.NULL_AABB && axisalignedbb.offset(blockpos).isVecInside(new Vec3d(this.posX, this.posY, this.posZ)))
             {
@@ -139,7 +140,7 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
             ++this.ticksInAir;
             Vec3d vec31 = new Vec3d(this.posX, this.posY, this.posZ);
             Vec3d vec3 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-            RayTraceResult rayTraceResult = this.worldObj.rayTraceBlocks(vec31, vec3, false, true, false);
+            RayTraceResult rayTraceResult = this.world.rayTraceBlocks(vec31, vec3, false, true, false);
             vec31 = new Vec3d(this.posX, this.posY, this.posZ);
             vec3 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
@@ -150,7 +151,7 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
 
             Entity entity = null;
             @SuppressWarnings("rawtypes")
-			List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
+			List list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
             double d0 = 0.0D;
             int i;
             float f1;
@@ -180,6 +181,7 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
 
             if (entity != null)
             {
+//                FFQLogger.info("EntityCustomArrow onUpdate(): I think I hit %s", entity.getName());
                 rayTraceResult = new RayTraceResult(entity);
             }
 
@@ -217,14 +219,14 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
                     this.xTile = blockpos1.getX();
                     this.yTile = blockpos1.getY();
                     this.zTile = blockpos1.getZ();
-                    iblockstate = this.worldObj.getBlockState(blockpos1);
+                    iblockstate = this.world.getBlockState(blockpos1);
                     this.inTile = iblockstate.getBlock();
 //                	MEMLogger.info("EntityCustomArrow onUpdate(): Looks like I'm in block " + this.inTile.getLocalizedName());
                     this.inData = this.inTile.getMetaFromState(iblockstate);
                     this.motionX = (double)((float)(rayTraceResult.hitVec.xCoord - this.posX));
                     this.motionY = (double)((float)(rayTraceResult.hitVec.yCoord - this.posY));
                     this.motionZ = (double)((float)(rayTraceResult.hitVec.zCoord - this.posZ));
-                    f3 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+                    f3 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
                     this.posX -= this.motionX / (double)f3 * 0.05000000074505806D;
                     this.posY -= this.motionY / (double)f3 * 0.05000000074505806D;
                     this.posZ -= this.motionZ / (double)f3 * 0.05000000074505806D;
@@ -235,7 +237,7 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
 
                     if (iblockstate.getMaterial() != Material.AIR)
                     {
-                        this.inTile.onEntityCollidedWithBlock(this.worldObj, blockpos1, iblockstate, this);
+                        this.inTile.onEntityCollidedWithBlock(this.world, blockpos1, iblockstate, this);
                     }
                 }
             }
@@ -244,14 +246,14 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
             {
                 for (i = 0; i < 4; ++i)
                 {
-                    this.worldObj.spawnParticle(EnumParticleTypes.CRIT, this.posX + this.motionX * (double)i / 4.0D, this.posY + this.motionY * (double)i / 4.0D, this.posZ + this.motionZ * (double)i / 4.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ, new int[0]);
+                    this.world.spawnParticle(EnumParticleTypes.CRIT, this.posX + this.motionX * (double)i / 4.0D, this.posY + this.motionY * (double)i / 4.0D, this.posZ + this.motionZ * (double)i / 4.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ, new int[0]);
                 }
             }
 
             this.posX += this.motionX;
             this.posY += this.motionY;
             this.posZ += this.motionZ;
-            f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+            f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
             this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
 
             for (this.rotationPitch = (float)(Math.atan2(this.motionY, (double)f2) * 180.0D / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F)
@@ -284,7 +286,7 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
                 for (int l = 0; l < 4; ++l)
                 {
                     f4 = 0.25F;
-                    this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)f4, this.posY - this.motionY * (double)f4, this.posZ - this.motionZ * (double)f4, this.motionX, this.motionY, this.motionZ, new int[0]);
+                    this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)f4, this.posY - this.motionY * (double)f4, this.posZ - this.motionZ * (double)f4, this.motionX, this.motionY, this.motionZ, new int[0]);
                 }
 
                 f3 = 0.6F;
@@ -313,8 +315,8 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
 
 	protected void handleEntityHit(Entity entity) {
 //    	FFQLogger.info("EntityCustomArrow handleEntityHit(): [%s] with base damage = %f", this.getClass().getName(), this.getDamage());
-    	float f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
-        int k = MathHelper.ceiling_double_int((double)f2 * this.getDamage());
+    	float f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+        int k = MathHelper.ceil((double)f2 * this.getDamage());
 
         if (this.getIsCritical())
         {
@@ -343,14 +345,14 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
             {
                 EntityLivingBase entitylivingbase = (EntityLivingBase)entity;
 
-                if (!this.worldObj.isRemote)
+                if (!this.world.isRemote)
                 {
                     entitylivingbase.setArrowCountInEntity(entitylivingbase.getArrowCountInEntity() + 1);
                 }
 
                 if (this.knockbackStrength > 0)
                 {
-                    float f4 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+                    float f4 = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 
                     if (f4 > 0.0F)
                     {
@@ -456,7 +458,7 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
         BlockPos blockpos = new BlockPos(this.getEntityBoundingBox().minX + 0.001D, this.getEntityBoundingBox().minY + 0.001D, this.getEntityBoundingBox().minZ + 0.001D);
         BlockPos blockpos1 = new BlockPos(this.getEntityBoundingBox().maxX - 0.001D, this.getEntityBoundingBox().maxY - 0.001D, this.getEntityBoundingBox().maxZ - 0.001D);
 
-        if (this.worldObj.isAreaLoaded(blockpos, blockpos1))
+        if (this.world.isAreaLoaded(blockpos, blockpos1))
         {
             for (int i = blockpos.getX(); i <= blockpos1.getX(); ++i)
             {
@@ -465,13 +467,13 @@ public abstract class EntityCustomArrow extends EntityTippedArrow
                     for (int k = blockpos.getZ(); k <= blockpos1.getZ(); ++k)
                     {
                         BlockPos blockpos2 = new BlockPos(i, j, k);
-                        IBlockState iblockstate = this.worldObj.getBlockState(blockpos2);
+                        IBlockState iblockstate = this.world.getBlockState(blockpos2);
 
 //                    	FFLogger.info("EntityCustomArrow doBlockCollisions(): collided with " + iblockstate.getBlock().getUnlocalizedName());
 
                         try
                         {
-                            iblockstate.getBlock().onEntityCollidedWithBlock(this.worldObj, blockpos2, iblockstate, this);
+                            iblockstate.getBlock().onEntityCollidedWithBlock(this.world, blockpos2, iblockstate, this);
                         }
                         catch (Throwable throwable)
                         {

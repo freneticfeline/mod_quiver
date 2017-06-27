@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.unladenswallow.minecraft.quiver.ClientProxy;
+import net.unladenswallow.minecraft.quiver.FFQLogger;
 import net.unladenswallow.minecraft.quiver.ModFFQuiver;
 
 public abstract class ItemCustomBow extends ItemBow {
@@ -40,17 +41,19 @@ public abstract class ItemCustomBow extends ItemBow {
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+	@Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
     {
-        ActionResult<ItemStack> event = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemStackIn, worldIn, playerIn, hand, true);
+        ItemStack itemInUse = playerIn.getHeldItem(hand);
+        ActionResult<ItemStack> event = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemInUse, worldIn, playerIn, hand, true);
         if (event != null) return event;
 
-        if (isUsableByPlayer(itemStackIn, playerIn))
+        if (isUsableByPlayer(itemInUse, playerIn))
         {
             playerIn.setActiveHand(hand);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemInUse);
         } else {
-            return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
+            return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemInUse);
         }
         
     }
@@ -116,7 +119,7 @@ public abstract class ItemCustomBow extends ItemBow {
 
 	            if (!worldIn.isRemote)
 	            {
-	                worldIn.spawnEntityInWorld(entityarrow);
+	                worldIn.spawnEntity(entityarrow);
 	            }
 	        }
 	    }

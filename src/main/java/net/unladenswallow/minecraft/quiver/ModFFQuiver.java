@@ -22,7 +22,7 @@ import net.unladenswallow.minecraft.quiver.item.ItemTorchArrow;
 import net.unladenswallow.minecraft.quiver.item.ItemWaterArrow;
 
 
-@Mod(modid = ModFFQuiver.MODID, useMetadata = true, acceptedMinecraftVersions="[1.10,1.11)", acceptableRemoteVersions="[1.10,1.11)")
+@Mod(modid = ModFFQuiver.MODID, useMetadata = true, acceptedMinecraftVersions="[1.11,1.12)", acceptableRemoteVersions="[1.11,1.12)")
 public class ModFFQuiver {
 
 	public static final String MODID = "mod_quiver";
